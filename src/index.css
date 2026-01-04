@@ -1,0 +1,197 @@
+    :root {
+        --color-black: #000000;
+        --color-white: #ffffff;
+        --color-accent: #A5FF00;
+        --font-primary: 'Montserrat', sans-serif;
+        --font-secondary: 'Playfair Display', serif;
+        --font-light: 300;
+        --font-regular: 400;
+        --font-medium: 500;
+        --font-semibold: 600;
+        --font-bold: 700;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--font-primary);
+        background-color: var(--color-white);
+        color: var(--color-black);
+        line-height: 1.6;
+    }
+
+
+    
+    .featured {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 80px 20px;
+    }
+
+    .featured h1 {
+        font-family: var(--font-secondary);
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: var(--font-bold);
+        text-align: center;
+        margin-bottom: 60px;
+        position: relative;
+        color: var(--color-black);
+    }
+
+    .featured h1::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 4px;
+        background-color: var(--color-accent);
+        margin: 20px auto 0;
+    }
+
+    .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        padding: 0 10px;
+    }
+
+    .product_card {
+        background: var(--color-white);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        cursor: pointer;
+    }
+
+    .product_card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 12px 40px rgba(165, 255, 0, 0.2);
+    }
+
+    .product_card img {
+        width: 100%;
+        height: 320px;
+        object-fit: cover;
+        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        transition: transform 0.4s ease;
+    }
+
+    .product_card:hover img {
+        transform: scale(1.08);
+    }
+
+    .product_card>b,
+    .product_details b {
+        display: inline-block;
+        background-color: var(--color-accent);
+        color: var(--color-black);
+        font-family: var(--font-primary);
+        font-weight: var(--font-semibold);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 6px 16px;
+        margin: 20px 0 10px 20px;
+        border-radius: 20px;
+    }
+
+    .product_card>h2,
+    .product_details h2 {
+        font-family: var(--font-primary);
+        font-size: 1.25rem;
+        font-weight: var(--font-semibold);
+        color: var(--color-black);
+        margin: 0 20px 8px;
+        line-height: 1.4;
+    }
+
+    .product_card>p,
+    .product_details p {
+        font-family: var(--font-primary);
+        font-size: 1.5rem;
+        font-weight: var(--font-bold);
+        color: var(--color-black);
+        margin: 0 20px 20px;
+    }
+
+    .product_details {
+        padding: 0;
+    }
+
+    .product_card .fa-heart {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 1.4rem;
+        color: var(--color-white);
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .product_card .fa-heart:hover {
+        background-color: var(--color-accent);
+        color: var(--color-black);
+        transform: scale(1.15);
+    }
+
+
+    
+    @media (max-width: 1200px) {
+        .products {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .featured {
+            padding: 60px 15px;
+        }
+
+        .featured h1 {
+            margin-bottom: 40px;
+        }
+
+        .products {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product_card img {
+            height: 280px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .featured {
+            padding: 40px 10px;
+        }
+
+        .products {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .product_card img {
+            height: 300px;
+        }
+
+        .product_card .fa-heart {
+            width: 42px;
+            height: 42px;
+            font-size: 1.2rem;
+        }
+    }
