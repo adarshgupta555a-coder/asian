@@ -1,4 +1,4 @@
-import "../../Css/Contact.css"
+import "../../css/Contact.css"
 const Contact = () => {
     return (
         <section className="Contact">

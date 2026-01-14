@@ -1,6 +1,6 @@
 import React from 'react'
-import "../../Css/Shop.css"
-const Shop = () => {
+import "../../css/Shop.css"
+const Products = () => {
   return (
     <section id="shop-container">
 
@@ -237,4 +237,4 @@ const Shop = () => {
   )
 }
 
-export default Shop
+export default Products

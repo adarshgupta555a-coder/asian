@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../Components/Navbar';
+// import Navbar from '../Components/Navbar';
 import FeaturedProduct from '../Components/Home/FeaturedProduct';
 import SliderFeature from '../Components/Home/SliderFeature';
 import Categories from '../Components/Home/Categories';
@@ -9,7 +9,6 @@ import Slider from '../Components/Home/Slider';
 
 const HomePage = () => {
   return (<>
-    <Navbar/>
     <Slider/>
     <FeaturedProduct/>
     <SliderFeature/>
