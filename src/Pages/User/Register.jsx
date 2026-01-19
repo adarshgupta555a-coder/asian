@@ -1,6 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "../../css/Register.css"
 const Register = () => {
+  const [data, setData] = useState({
+    name:"",
+    email:"",
+    age:"",
+    phone:"",
+    password:"",
+    gender:"",
+    address:"",
+    pincode:"",
+    city:"",
+    state:"",
+    country:""
+  })
+
+  const onChangeRegister = (e) => {
+    const {name,value} = e.target;
+    setData((prev)=>({...prev,[name]:value}));
+  }
+
+  const onHandleRegister = (e) => {
+    e.preventDefault();
+    console.log(data)
+
+  }
   return (
     <div className='register-body'>
     <div className="register-container">
@@ -9,49 +33,57 @@ const Register = () => {
   </div>
   <h1>Create Account</h1>
   <p className="subtitle">Fill in the details to get started</p>
-  <form>
+  <form onSubmit={onHandleRegister}>
     <div className="form-grid">
       <div className="form-group">
         <label htmlFor="name">Name *</label>
         <input
           type="text"
-          id="name"
+          name="name"
           placeholder="Enter your name"
-          required=""
+          onChange={onChangeRegister}
+          value={data.name}
+          required
         />
       </div>
       <div className="form-group">
         <label htmlFor="email">Email *</label>
         <input
           type="email"
-          id="email"
+          name="email"
           placeholder="Enter your email"
-          required=""
+          onChange={onChangeRegister}
+          value={data.email}
+          required
         />
       </div>
       <div className="form-group">
         <label htmlFor="phone">Phone *</label>
         <input
           type="tel"
-          id="phone"
+          name="phone"
           placeholder="Enter phone number"
-          required=""
+          onChange={onChangeRegister}
+          value={data.phone}
+          required
         />
       </div>
       <div className="form-group">
         <label htmlFor="age">Age *</label>
         <input
           type="number"
-          id="age"
+          name="age"
           placeholder="Enter your age"
           min={1}
           max={120}
-          required=""
+          onChange={onChangeRegister}
+          value={data.age}
+          required
         />
       </div>
       <div className="form-group">
         <label htmlFor="gender">Gender *</label>
-        <select id="gender" required="">
+        <select name="gender" required value={data.gender} onChange={onChangeRegister}>
           <option value="">Select gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -63,44 +95,54 @@ const Register = () => {
         <label htmlFor="password">Password *</label>
         <input
           type="password"
-          id="password"
+          name="password"
           placeholder="Create password"
-          required=""
+          onChange={onChangeRegister}
+          value={data.password}
+          required
         />
       </div>
       <div className="form-group full-width">
         <label htmlFor="address">Address *</label>
         <textarea
-          id="address"
+          name="address"
           placeholder="Enter your address"
-          required=""
-          defaultValue={""}
+          onChange={onChangeRegister}
+          value={data.address}
+          required
+          // defaultValue={data.address}
         />
       </div>
       <div className="form-group">
         <label htmlFor="pincode">Pincode *</label>
         <input
           type="text"
-          id="pincode"
+          name="pincode"
           placeholder="Enter pincode"
-          required=""
+          onChange={onChangeRegister}
+          value={data.pincode}
+          required
         />
       </div>
       <div className="form-group">
         <label htmlFor="city">City *</label>
-        <input type="text" id="city" placeholder="Enter city" required="" />
+        <input type="text" name="city" placeholder="Enter city" required onChange={onChangeRegister}
+          value={data.city} />
       </div>
       <div className="form-group">
         <label htmlFor="state">State *</label>
-        <input type="text" id="state" placeholder="Enter state" required="" />
+        <input type="text" name="state" placeholder="Enter state" required onChange={onChangeRegister}
+          value={data.state} />
       </div>
       <div className="form-group">
         <label htmlFor="country">Country *</label>
         <input
           type="text"
-          id="country"
+          name="country"
           placeholder="Enter country"
-          required=""
+          onChange={onChangeRegister}
+          value={data.country}
+          required
         />
       </div>
     </div>

@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "../../css/Login.css";
 const Login = () => {
+  const [user, setUser] = useState({
+    email:"",
+    password:""
+  });
+
+  const onChangeLogin = (e) => {
+    const {name,value} = e.target;
+
+    setUser((prev)=>({...prev,[name]:value}))
+  }
+
+  const onHandleLogin = (e) => {
+    e.preventDefault();
+    console.log(user);
+  }
+
   return (
    <div className="login-body">
   <div className="login-container">
@@ -9,23 +25,27 @@ const Login = () => {
     </div>
     <h1>Welcome Back</h1>
     <p className="subtitle">Enter your credentials to continue</p>
-    <form>
+    <form onSubmit={onHandleLogin}>
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input
           type="email"
-          id="email"
+          name="email"
           placeholder="Enter your email"
-          required=""
+          onChange={onChangeLogin}
+          value={user.email}
+          required
         />
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>
         <input
           type="password"
-          id="password"
+          name="password"
           placeholder="Enter your password"
-          required=""
+          onChange={onChangeLogin}
+          value={user.password}
+          required
         />
       </div>
       <div className="form-footer">
