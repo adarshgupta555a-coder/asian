@@ -1,10 +1,11 @@
+import ProductCard from "../shop/productCard"
 
 const FeaturedProduct = () => {
   return (
      <section className="featured">
         <h1>Featured Product</h1>
         <div className="products">
-            <div className="product_card">
+            {/* <div className="product_card">
                 <img src="https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/j/l/s/xl-marvel-tshirt-outfiq-original-imahfb4fggvzzkeb.jpeg"
                     alt="Product 1"/>
                 <b>T-shirt</b>
@@ -69,7 +70,14 @@ const FeaturedProduct = () => {
                     <p>$89.99</p>
                 </div>
                 <i className="fa fa-heart"></i>
-            </div>
+            </div> */}
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
         </div>
     </section>
   )
