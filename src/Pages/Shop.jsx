@@ -1,11 +1,14 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import "../css/Shop.css"
 import ProductCard from '../Components/shop/productCard'
+import { useSelector } from 'react-redux';
+import { use } from 'react';
 const Shop = () => {
    const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [sortBy, setSortBy] = useState('');
     const [showFilters, setShowFilters] = useState(false);
+    const authData = useSelector((state)=>state.Auth.value);
   
     const products = [
       { id: 1, image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400', title: 'Classic Black Hoodie', price: 1299, discount: 20 },
@@ -18,6 +21,11 @@ const Shop = () => {
       { id: 8, image: 'https://images.unsplash.com/photo-1614676471928-2ed0ad1061a4?w=400', title: 'Beige Pullover', price: 1349, discount: 10 },
       { id: 9, image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400', title: 'Black Premium Hoodie', price: 1799, discount: null },
     ];
+
+    useEffect(()=>{
+      console.log(authData)
+    },[])
+ 
   return (
    <>
   
