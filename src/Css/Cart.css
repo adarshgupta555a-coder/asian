@@ -123,6 +123,55 @@
             margin-top: auto;
         }
 
+
+          .quantity-control {
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid var(--color-black);
+            background: var(--color-white);
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--color-white);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-black);
+        }
+
+        .qty-btn:hover {
+            background: var(--color-accent);
+        }
+
+        .qty-btn:active {
+            transform: scale(0.95);
+        }
+
+        .qty-input {
+            width: 45px;
+            height: 32px;
+            border: none;
+            border-left: 2px solid var(--color-black);
+            border-right: 2px solid var(--color-black);
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            background: var(--color-white);
+            color: var(--color-black);
+        }
+
+        .qty-input:focus {
+            outline: none;
+        }
+
         .price {
             font-size: 20px;
             font-weight: 700;
@@ -331,6 +380,22 @@
             .cart-summary {
                 padding: 20px;
             }
+               .quantity-control {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .qty-btn {
+                flex: 0 0 40px;
+                width: 40px;
+                height: 36px;
+            }
+
+            .qty-input {
+                flex: 1;
+                height: 36px;
+            }
+
         }
 
         @media (max-width: 480px) {

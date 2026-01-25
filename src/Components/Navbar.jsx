@@ -4,9 +4,11 @@ import { Link } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthAction } from '../store/AuthSlice';
 import supabase from "../Database/supabase";
+import { FetchCartThunk } from '../store/cartThunk';
 
 const Navbar = () => {
   const authData = useSelector((state)=>state.Auth.value);
+  const cartData = useSelector((state)=>state?.Cart)
   const dispatch = useDispatch()
   const [mobile, setMobile] = useState(false);
   useEffect(() => {
@@ -14,6 +16,7 @@ const Navbar = () => {
       getUserData().then((res)=>{
         console.log(res)
           dispatch(AuthAction.getSession(res[0]));
+          dispatch(FetchCartThunk(res[0].id))
       })
     }
   }, [])
@@ -69,7 +72,7 @@ let { data: profile, error } = await supabase
           <Link to="/cart" style={{ color: "inherit", textDecoration: "none" }}>
             <div className="basket">
               <i className="fa fa-shopping-basket" />
-              <span className="badge">3</span>
+              <span className="badge">{cartData?.length||1}</span>
             </div>
           </Link>
         </div>

@@ -8,6 +8,7 @@ import Register from "./Pages/User/Register"
 import Login from "./Pages/User/Login"
 import CartPage from "./Pages/CartPage"
 import ProductPage from "./Pages/ProductPage"
+import Checkout from "./Pages/Checkout"
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" element={<Register />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/product-page/:id" element={<ProductPage />} />
 
           <Route path="*" element={<NotFoundPage />} />

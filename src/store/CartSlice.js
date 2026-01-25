@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { FetchCartThunk } from "./cartThunk";
 
 const CartSlice = createSlice({
   name: "cart",
@@ -20,7 +21,14 @@ const CartSlice = createSlice({
   if (item && item.qty > 1) {
     item.qty -= 1;
   } 
-    }
+    },
+
+    clearCart: () => []   // 🔥 logout case
+  },
+  extraReducers:(builder)=>{
+    builder.addCase(FetchCartThunk.fulfilled, (state, action)=>{
+      return action.payload
+    })
   }
 });
 

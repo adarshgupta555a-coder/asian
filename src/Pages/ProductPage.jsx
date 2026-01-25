@@ -4,48 +4,102 @@ import { useParams } from 'react-router'
 import supabase from '../Database/supabase'
 import { useDispatch, useSelector } from 'react-redux'
 import { cartAction } from '../store/CartSlice'
+import SyncCartThunk, { FetchCartThunk } from '../store/cartThunk'
+
 const ProductPage = () => {
     const { id } = useParams()
     const [product, setProduct] = useState(null);
     const [qty, setQty] = useState(0);
-    const cartData = useSelector((state)=>state?.Cart)
+    const [mainImg, setMainImg] = useState("")
+    const cartData = useSelector((state) => state?.Cart)
+    const userData = useSelector((state) => state?.Auth?.value)
     const dispatch = useDispatch()
 
 
     useEffect(() => {
         getProduct()
-            console.log(id)
-        console.log(cartData)
-        let cartfilter = cartData.findIndex((item)=>item.id == id)
-        console.log(cartfilter)
-        if (cartfilter >= 0) {
-                    setQty(cartData[cartfilter]?.qty)
-                    console.log(cartData[cartfilter]?.qty)
-        }
+        console.log(id)
+        //for realtime insert , update in supabase
+        const channel = supabase
+            .channel("cart-realtime")
+            .on(
+                "postgres_changes",
+                { event: "*", schema: "public", table: "cart" },
+                payload => {
+                    console.log("Cart updated:", payload);
+                    // optional: refetch cart
+                }
+            )
+            .subscribe();
+
+        return () => supabase.removeChannel(channel);
+
     }, [])
+
+    useEffect(()=>{
+                setMainImg(product?.image_url)
+           let cartfilter = cartData.findIndex((item) => item.id == id);
+        if (cartfilter >= 0) {
+            setQty(cartData[cartfilter]?.qty)
+            console.log(cartData[cartfilter]?.qty)
+        }
+
+    },[cartData])
+
+
+    const OnImageMain = (e) =>{
+        setMainImg(e.target.src)
+    }
+
+
+    const DeleteCart = async (userId, productId) => {
+
+        const { error } = await supabase
+            .from('cart')
+            .delete()
+            .eq('user_id', userId)
+            .eq("product_id", productId)
+
+        console.log(error)
+        setQty(0);
+        dispatch(FetchCartThunk(userData?.id))
+
+    }
+
+
 
     const getProduct = async () => {
         let { data, error } = await supabase
             .from('product')
             .select("*")
             .eq('id', id)
-            // console.log(JSON.parse(data[0].Images))
-            setProduct(data[0])
+        // console.log(JSON.parse(data[0].Images))
+        setProduct(data[0])
     }
 
 
     const increaseQty = () => {
         if (qty <= 10) {
-                    setQty(prev => ++prev);
-                    const cartData = {id:id,qty:qty+1}
-                    dispatch(cartAction.addToCart(cartData))
+            setQty(prev => ++prev);
+            const cartItem = { id: id, qty: qty + 1, price: product?.price }
+            dispatch(cartAction.addToCart(cartItem))
+            dispatch(SyncCartThunk({ userId: userData?.id, cartItem }))
         }
     }
 
     const decreaseQty = () => {
         if (qty > 0) {
-        setQty(prev => --prev);
-        dispatch(cartAction.removeFromCart(id))
+            setQty(prev => --prev);
+            dispatch(cartAction.removeFromCart(id))
+            if (qty - 1 !== 0) {
+                const cartItem = { id: id, qty: qty - 1, price: product?.price }
+                dispatch(SyncCartThunk({ userId: userData?.id, cartItem }))
+            } else {
+                //delete function active
+                DeleteCart(userData?.id, product?.id)
+            }
+
+
         }
     }
     return (
@@ -56,18 +110,24 @@ const ProductPage = () => {
                     <div className="product-images">
                         <div className="main-image">
                             <img
-                                src={product?.image_url}
+                                src={mainImg || product?.image_url}
                                 alt="Product"
                             />
                         </div>
                         <div className="thumbnail-container">
-                            {product?.Images && JSON.parse(product?.Images).map((item,index) => (<div className="thumbnail" key={index}>
+                           <div className="thumbnail" onClick={OnImageMain}>
+                                <img
+                                    src={product?.image_url}
+                                    alt="Thumb 1"
+                                />
+                            </div> 
+                            {product?.Images && JSON.parse(product?.Images).map((item, index) => (<div className="thumbnail" key={index} onClick={OnImageMain}>
                                 <img
                                     src={item}
                                     alt="Thumb 1"
                                 />
-                            </div> ))}
-                            
+                            </div>))}
+
 
                         </div>
                     </div>
@@ -81,11 +141,11 @@ const ProductPage = () => {
                         </div>
                         <div className="price-section">
                             <span className="current-price">₹{product?.price}</span>
-                            <span className="original-price">₹{product?.price*2}</span>
+                            <span className="original-price">₹{product?.price * 2}</span>
                             <span className="discount-badge">50% OFF</span>
                         </div>
                         <p className="product-description">
-                           {product?.description}
+                            {product?.description}
                         </p>
                         {/* Size Selection */}
                         <div className="size-section">
@@ -188,7 +248,7 @@ const ProductPage = () => {
                                     className="qty-input"
                                     value={qty}
                                     readOnly=""
-                                    
+
                                 />
                                 <button className="qty-btn" onClick={increaseQty}>
                                     +
@@ -197,9 +257,11 @@ const ProductPage = () => {
                         </div>
                         {/* Action Buttons */}
                         <div className="action-buttons">
-                            <button className="add-to-cart-btn" onclick="addToCart()">
+                           {qty > 0? <button className="add-to-cart-btn" onClick={()=>DeleteCart(userData?.id,id)}>
+                                Remove from Cart
+                            </button>: <button className="add-to-cart-btn" onClick={increaseQty}>
                                 Add to Cart
-                            </button>
+                            </button>}
                             <button className="wishlist-btn">♥</button>
                         </div>
                         {/* Product Features */}
