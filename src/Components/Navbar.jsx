@@ -3,7 +3,7 @@ import "../css/Navbar.css"
 import { Link } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthAction } from '../store/AuthSlice';
-import {supabase} from "../Database/supabase";
+import supabase from "../Database/supabase";
 
 const Navbar = () => {
   const authData = useSelector((state)=>state.Auth.value);

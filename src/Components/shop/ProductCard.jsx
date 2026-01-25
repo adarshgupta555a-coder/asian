@@ -1,12 +1,12 @@
 import React from 'react'
 
-const ProductCard = ({title,price}) => {
+const ProductCard = ({name,price,image_url,category}) => {
   return (
             <div className="product_card">
-                <img src="https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/j/l/s/xl-marvel-tshirt-outfiq-original-imahfb4fggvzzkeb.jpeg"
+                <img src={image_url}
                     alt="Product 1"/>
-                <b>T-shirt</b>
-                <h2>{title}</h2>
+                <b>{category?.name}</b>
+                <h2>{name}</h2>
                 <p>₹{price}</p>
                 <i className="fa fa-heart"></i>
             </div>
