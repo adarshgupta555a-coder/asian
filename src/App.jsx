@@ -9,6 +9,7 @@ import Login from "./Pages/User/Login"
 import CartPage from "./Pages/CartPage"
 import ProductPage from "./Pages/ProductPage"
 import Checkout from "./Pages/Checkout"
+import UserDashboard from "./Pages/User/UserDashboard"
 function App() {
 
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<UserDashboard />} />
           <Route path="/product-page/:id" element={<ProductPage />} />
 
           <Route path="*" element={<NotFoundPage />} />

@@ -68,11 +68,13 @@ let { data: profile, error } = await supabase
         </ul>
         <div className="profile">
           <i className="fa fa-search" />
+          <Link to="/profile" style={{ color: "inherit", textDecoration: "none" }}>
           <i className="fa fa-user" />
+          </Link>
           <Link to="/cart" style={{ color: "inherit", textDecoration: "none" }}>
             <div className="basket">
               <i className="fa fa-shopping-basket" />
-              <span className="badge">{cartData?.length||1}</span>
+              <span className="badge">{cartData?.length||0}</span>
             </div>
           </Link>
         </div>

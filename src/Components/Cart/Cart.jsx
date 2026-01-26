@@ -66,14 +66,14 @@ const Cart = () => {
           {cart?.map((item, index) => (<CartCard key={index} cart={item} />
           ))}
 
-          <a href="#" className="continue-shopping">
+          <Link to="/product" className="continue-shopping">
             ← Continue Shopping
-          </a>
+          </Link>
         </div>
-        <div className="cart-summary">
+      {  cart?.length > 0 && <div className="cart-summary">
           <h2 className="summary-title">Order Summary</h2>
           <div className="summary-row">
-            <span>Subtotal (3 items)</span>
+            <span>Subtotal ({cartData?.length} items)</span>
             <span>₹{totalPrice}</span>
           </div>
           <div className="summary-row discount">
@@ -109,7 +109,7 @@ const Cart = () => {
           >
             🔒 Secure Checkout
           </div>
-        </div>
+        </div>}
       </div>
     </div>
 
