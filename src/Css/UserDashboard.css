@@ -213,7 +213,7 @@
             border-color: #22c55e;
         }
 
-        .status-processing {
+        .status-pending {
             background: #fbbf24;
             color: var(--color-black);
             border-color: #fbbf24;

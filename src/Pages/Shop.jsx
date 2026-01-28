@@ -16,6 +16,9 @@ const Shop = () => {
     getProducts()
     console.log(authData)
     console.log(products)
+    // return()=>{
+    //   console.log("closed")
+    // }
   }, [])
 
   const getProducts = async () => {
@@ -122,9 +125,7 @@ const Shop = () => {
 
             <div className="card">
               {products?.map(product => (
-                <Link to={`/product-page/${product.id}`} style={{textDecoration:"none"}} key={product.id}>
-                <ProductCard  {...product} />
-                </Link>
+                <ProductCard  {...product}  key={product?.id} />
               ))}
             </div>
           </div>

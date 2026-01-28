@@ -146,6 +146,13 @@
         color: var(--color-black);
         transform: scale(1.15);
     }
+    .product_card .heart-o {
+        background-color: var(--color-accent);
+        color: var(--color-black);
+        transform: scale(1.15);
+    }
+
+
 
 
     

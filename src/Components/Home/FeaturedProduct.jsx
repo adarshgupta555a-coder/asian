@@ -8,6 +8,9 @@ const FeaturedProduct = () => {
 
     useEffect(() => {
         getProducts()
+        return()=>{
+            console.log("closed")
+        }
     }, [])
 
     const getProducts = async () => {
