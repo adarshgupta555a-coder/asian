@@ -10,6 +10,8 @@ import CartPage from "./Pages/CartPage"
 import ProductPage from "./Pages/ProductPage"
 import Checkout from "./Pages/Checkout"
 import UserDashboard from "./Pages/User/UserDashboard"
+import ForgotPassword from "./Pages/User/ForgotPassword"
+import ChangePassword from "./Pages/User/ChangePassword"
 function App() {
 
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/profile" element={<UserDashboard />} />
           <Route path="/product-page/:id" element={<ProductPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ChangePassword />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

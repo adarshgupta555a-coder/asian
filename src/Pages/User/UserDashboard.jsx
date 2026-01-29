@@ -8,12 +8,15 @@ import ProfileSet from "../../Components/userDashboard/ProfileSet";
 import OverView from '../../Components/userDashboard/OverView';
 import { useSelector } from 'react-redux';
 import supabase from "../../Database/supabase";
+import { useNavigate } from 'react-router';
 
 const UserDashboard = () => {
   const [menu, setMenu] = useState(0);
   const userData = useSelector((state) => state.Auth.value);
   const [orders, setOrders] = useState(null);
-  const [orderGroup, setOrder] = useState(null)
+  const [orderGroup, setOrder] = useState(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (userData?.id) {
       getOrders()
@@ -74,9 +77,9 @@ const UserDashboard = () => {
   });
 
   const cancelOrder = async (itemId, orderId) => {
-  const totalPrice = (orderGroup?.find((or)=>or.id === orderId))?.total_amount;
-  const Price =  (orders?.find((or)=>or.id === itemId))?.price;
-  const Qty =  (orders?.find((or)=>or.id === itemId))?.quantity;
+    const totalPrice = (orderGroup?.find((or) => or.id === orderId))?.total_amount;
+    const Price = (orders?.find((or) => or.id === itemId))?.price;
+    const Qty = (orders?.find((or) => or.id === itemId))?.quantity;
 
     const { data, error } = await supabase
       .from('order_items')
@@ -84,28 +87,40 @@ const UserDashboard = () => {
       .eq('id', itemId)
       .select()
 
-      console.log(data)
-      if (error) {
-        console.log(error);
-        return;
-      }
+    console.log(data)
+    if (error) {
+      console.log(error);
+      return;
+    }
 
 
     const { data: updateOrder, error: OrderErr } = await supabase
       .from('orders')
-      .update({ total_amount:  totalPrice-(Price*Qty)})
+      .update({ total_amount: totalPrice - (Price * Qty) })
       .eq('id', orderId)
       .select()
 
-        console.log(updateOrder);
+    console.log(updateOrder);
 
-      if (OrderErr) {
-        console.log(OrderErr);
-        return;
-      }
+    if (OrderErr) {
+      console.log(OrderErr);
+      return;
+    }
 
-      getOrders()
+    getOrders()
 
+  }
+
+  const Onlogout = async () => {
+    let { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    navigate("/signin");
+    
   }
 
 
@@ -119,7 +134,7 @@ const UserDashboard = () => {
           </div>
           <button
             className="logout-btn"
-            onclick="alert('Logged out successfully!')"
+            onClick={Onlogout}
           >
             Logout
           </button>
