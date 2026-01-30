@@ -12,6 +12,8 @@ import Checkout from "./Pages/Checkout"
 import UserDashboard from "./Pages/User/UserDashboard"
 import ForgotPassword from "./Pages/User/ForgotPassword"
 import ChangePassword from "./Pages/User/ChangePassword"
+import AdminPanel from "./Pages/admin/AdminPanel"
+import SearchPanel from "./Pages/SearchPanel"
 function App() {
 
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path="/product-page/:id" element={<ProductPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ChangePassword />} />
+          <Route path="/admin-panel" element={<AdminPanel />} />
+          <Route path="/search" element={<SearchPanel />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
