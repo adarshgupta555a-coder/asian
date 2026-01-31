@@ -79,7 +79,7 @@ const ProductPage = () => {
 
 
     const increaseQty = () => {
-        if (qty <= 10) {
+        if (qty < product.stock) {
             setQty(prev => ++prev);
             const cartItem = { id: id, qty: qty + 1, price: product?.price }
             dispatch(cartAction.addToCart(cartItem))

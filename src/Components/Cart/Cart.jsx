@@ -22,12 +22,14 @@ const Cart = () => {
 
 
   useEffect(() => {
-    const totalData = cartData.reduce((acu, curr) => {
+    if (cartData.length > 0) {
+      const totalData = cartData?.reduce((acu, curr) => {
       return acu + curr.price * curr.qty;
     }, 0)
-
     console.log(totalData)
     setTotalPrice(totalData)
+    }
+    
   }, [cartData])
 
   const getCartData = async () => {
@@ -40,6 +42,7 @@ const Cart = () => {
         name,
         image_url,
         price,
+        stock,
         category(
         name
         )

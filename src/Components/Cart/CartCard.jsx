@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const CartCard = ({cart}) => {
     const [qty, setQty] = useState(0);
-    const cartData = useSelector((state) => state?.Cart)
+    // const cartData = useSelector((state) => state?.Cart)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const CartCard = ({cart}) => {
 
 
      const increaseQty = () => {
-        if (qty <= 10) {
+        if (qty < cart?.product?.stock) {
             setQty(prev => ++prev);
             const cartItem = { id: cart?.product?.id, qty: qty + 1, price: cart?.product?.price }
             dispatch(cartAction.addToCart(cartItem))
@@ -95,11 +95,12 @@ const CartCard = ({cart}) => {
               </div>
               <div className="quantity-section">
                 <h4>Quantity</h4>
-                <div className="quantity-counter">
+                 {cart?.product?.stock == 0?<h3>Product is not available</h3> :
+                 <div className="quantity-counter">
                   <button className="qty-btn" onClick={decreaseQty}>−</button>
                   <input type="number" id="quantity" className="qty-input" value={qty||cart?.quantity} readonly />
                   <button className="qty-btn" onClick={increaseQty}>+</button>
-                </div>
+                </div>}
               </div>
               <div className="item-price">
                 <p className="price">
@@ -108,7 +109,7 @@ const CartCard = ({cart}) => {
                 <p className="saved">You saved ₹{cart?.product?.price+200}</p>
               </div>
             </div>
-            <button className="remove-btn" onClick={()=>DeleteCart(cart?.user_id,  cart?.product?.id)}>✕</button>
+            {cart?.product?.stock < cart?.quantity?<h3>Product is not available</h3> :<button className="remove-btn" onClick={()=>DeleteCart(cart?.user_id,  cart?.product?.id)}>✕</button>}
           </div>
   )
 }

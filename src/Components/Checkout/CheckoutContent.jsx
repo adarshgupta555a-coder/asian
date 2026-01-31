@@ -32,6 +32,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
         name,
         image_url,
         price,
+        stock,
         category(
         name
         )
@@ -74,6 +75,32 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
       return;
     }
 
+    
+
+   
+    const updates = cart.map(item =>{
+      if (item.product.stock < item.quantity) {
+        alert("stock is not availble")
+        return;
+      }
+      return supabase
+        .from("product")
+        .update({
+          stock: item.product.stock - item.quantity,
+        })
+        .eq("id", item.product.id)
+      }
+    );
+
+    const results = await Promise.allSettled(updates);
+
+    const failed = results.filter(r => r.status === "rejected");
+
+    if (failed.length) {
+      console.error("Some stock updates failed", failed);
+      return;
+    }
+
 
 
     const { data: order, error: OrderErr } = await supabase
@@ -99,7 +126,10 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
       return;
     }
 
-    const OrderItems = cart.map((item) => ({  order_id: order.id, product_id: item.product.id, quantity: item.quantity, price: item.price }))
+   
+    const OrderItems = cart.map((item) => ({ order_id: order.id, product_id: item.product.id, quantity: item.quantity, price: item.price}))
+
+   
     const { data, error } = await supabase
       .from('order_items')
       .insert(OrderItems)
@@ -119,19 +149,18 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
     if (CartErr) {
       console.log(CartErr);
       return CartErr;
-    } 
+    }
+
 
     dispatch(FetchCartThunk(userData?.user_id))
     alert("order placed")
-      OnhandleStep()
-    
-
-
+    OnhandleStep();
 
   }
+
   return (
     <>
-   {  cart?.length > 0 &&   <div className="checkout-form">
+      {cart?.length > 0 && <div className="checkout-form">
         {/* Shipping Information */}
         <div className="form-section">
           <h2 className="section-title">Shipping Information</h2>
@@ -319,7 +348,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
         </div>
       </div>}
       {/* Order Summary */}
-      {  cart?.length > 0 &&  <div className="order-summary">
+      {cart?.length > 0 && <div className="order-summary">
         <h2 className="summary-title">Order Summary</h2>
         {/*Order Cards*/}
         {cart?.map((item, index) => (
