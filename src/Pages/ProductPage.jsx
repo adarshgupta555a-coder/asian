@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "../css/ProductPage.css"
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import supabase from '../Database/supabase'
 import { useDispatch, useSelector } from 'react-redux'
 import { cartAction } from '../store/CartSlice'
@@ -14,6 +14,7 @@ const ProductPage = () => {
     const cartData = useSelector((state) => state?.Cart)
     const userData = useSelector((state) => state?.Auth?.value)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -36,34 +37,36 @@ const ProductPage = () => {
 
     }, [])
 
-    useEffect(()=>{
-                setMainImg(product?.image_url)
-           let cartfilter = cartData.findIndex((item) => item.id == id);
+    useEffect(() => {
+        setMainImg(product?.image_url)
+        let cartfilter = cartData.findIndex((item) => item.id == id);
         if (cartfilter >= 0) {
             setQty(cartData[cartfilter]?.qty)
             console.log(cartData[cartfilter]?.qty)
         }
 
-    },[cartData])
+    }, [cartData])
 
 
-    const OnImageMain = (e) =>{
+    const OnImageMain = (e) => {
         setMainImg(e.target.src)
     }
 
 
     const DeleteCart = async (userId, productId) => {
+        if (userData) {
+            const { error } = await supabase
+                .from('cart')
+                .delete()
+                .eq('user_id', userId)
+                .eq("product_id", productId)
 
-        const { error } = await supabase
-            .from('cart')
-            .delete()
-            .eq('user_id', userId)
-            .eq("product_id", productId)
-
-        console.log(error)
-        setQty(0);
-        dispatch(FetchCartThunk(userData?.id))
-
+            console.log(error)
+            setQty(0);
+            dispatch(FetchCartThunk(userData?.id))
+        } else {
+            navigate("/signin")
+        }
     }
 
 
@@ -79,27 +82,37 @@ const ProductPage = () => {
 
 
     const increaseQty = () => {
-        if (qty < product.stock) {
-            setQty(prev => ++prev);
-            const cartItem = { id: id, qty: qty + 1, price: product?.price }
-            dispatch(cartAction.addToCart(cartItem))
-            dispatch(SyncCartThunk({ userId: userData?.id, cartItem }))
+        if (userData) {
+            if (qty < product.stock) {
+                setQty(prev => ++prev);
+                const cartItem = { id: id, qty: qty + 1, price: product?.price }
+                dispatch(cartAction.addToCart(cartItem))
+                dispatch(SyncCartThunk({ userId: userData?.id, cartItem }))
+            }
+        } else {
+            navigate("/signin")
         }
     }
 
     const decreaseQty = () => {
-        if (qty > 0) {
-            setQty(prev => --prev);
-            dispatch(cartAction.removeFromCart(id))
-            if (qty - 1 !== 0) {
-                const cartItem = { id: id, qty: qty - 1, price: product?.price }
-                dispatch(SyncCartThunk({ userId: userData?.id, cartItem }))
-            } else {
-                //delete function active
-                DeleteCart(userData?.id, product?.id)
+        if (userData) {
+
+
+            if (qty > 0) {
+                setQty(prev => --prev);
+                dispatch(cartAction.removeFromCart(id))
+                if (qty - 1 !== 0) {
+                    const cartItem = { id: id, qty: qty - 1, price: product?.price }
+                    dispatch(SyncCartThunk({ userId: userData?.id, cartItem }))
+                } else {
+                    //delete function active
+                    DeleteCart(userData?.id, product?.id)
+                }
+
+
             }
-
-
+        } else {
+            navigate("/signin")
         }
     }
     return (
@@ -115,12 +128,12 @@ const ProductPage = () => {
                             />
                         </div>
                         <div className="thumbnail-container">
-                           <div className="thumbnail" onClick={OnImageMain}>
+                            <div className="thumbnail" onClick={OnImageMain}>
                                 <img
                                     src={product?.image_url}
                                     alt="Thumb 1"
                                 />
-                            </div> 
+                            </div>
                             {product?.Images && JSON.parse(product?.Images).map((item, index) => (<div className="thumbnail" key={index} onClick={OnImageMain}>
                                 <img
                                     src={item}
@@ -257,9 +270,9 @@ const ProductPage = () => {
                         </div>
                         {/* Action Buttons */}
                         <div className="action-buttons">
-                           {qty > 0? <button className="add-to-cart-btn" onClick={()=>DeleteCart(userData?.id,id)}>
+                            {qty > 0 ? <button className="add-to-cart-btn" onClick={() => DeleteCart(userData?.id, id)}>
                                 Remove from Cart
-                            </button>: <button className="add-to-cart-btn" onClick={increaseQty}>
+                            </button> : <button className="add-to-cart-btn" onClick={increaseQty}>
                                 Add to Cart
                             </button>}
                             <button className="wishlist-btn">♥</button>
