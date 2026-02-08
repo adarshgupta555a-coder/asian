@@ -14,6 +14,7 @@ import ForgotPassword from "./Pages/User/ForgotPassword"
 import ChangePassword from "./Pages/User/ChangePassword"
 import AdminPanel from "./Pages/admin/AdminPanel"
 import SearchPanel from "./Pages/SearchPanel"
+import Payment from "./Pages/Payment"
 function App() {
 
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/reset-password" element={<ChangePassword />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
           <Route path="/search" element={<SearchPanel />} />
+          <Route path="/payment" element={<Payment />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -3,6 +3,7 @@ import supabase from '../../Database/supabase';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { FetchCartThunk } from '../../store/cartThunk';
+import Payment from '../../Pages/Payment';
 
 const CheckoutContent = ({ step, OnhandleStep }) => {
   const [cart, setCart] = useState(null);
@@ -75,9 +76,11 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
       return;
     }
 
-    
+    OnhandleStep();
+  }
 
-   
+  const Onpayment = async () =>{
+
     const updates = cart.map(item =>{
       if (item.product.stock < item.quantity) {
         alert("stock is not availble")
@@ -394,7 +397,8 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
             <button className="apply-btn">Apply</button>
           </div>
         </div>
-        <button className="place-order-btn" onClick={Onsubmit}>{step === 2 ? "Place Order" : step === 3 ? "Make Payment" : "Order Placed"}</button>
+        {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?<Payment totalData={totalData} Onpayment={Onpayment}/>: <button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
+        
         <div className="security-badge">🔒 Secure SSL Encrypted Payment</div>
       </div>}
     </>
