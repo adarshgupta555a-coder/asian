@@ -3,7 +3,7 @@ import style from "../../Css/Slider.module.css";
 
 const Slider = () =>{
    const [img,setimage] = useState(0);
-   const arrimg = ["https://cdn.pixabay.com/photo/2025/10/07/15/39/cherries-9879407_1280.jpg","https://cdn.pixabay.com/photo/2016/08/12/10/00/raindrop-1587994_1280.jpg","https://cdn.pixabay.com/photo/2022/05/13/09/12/raindrop-7193181_1280.jpg","https://cdn.pixabay.com/photo/2020/04/22/08/06/dolomites-5076487_960_720.jpg"]
+   const arrimg = ["https://images-eu.ssl-images-amazon.com/images/G/31/INSLGW/af_pc_2x._CB792409181_.jpg","https://cdn.pixabay.com/photo/2016/08/12/10/00/raindrop-1587994_1280.jpg","https://cdn.pixabay.com/photo/2022/05/13/09/12/raindrop-7193181_1280.jpg","https://cdn.pixabay.com/photo/2020/04/22/08/06/dolomites-5076487_960_720.jpg"]
 
    const onHandleSlider = (opr)=>{
     if (opr) {
