@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import "../../Css/Category.css";
 import supabase from "../../Database/supabase";
 import CategoryCard from "./CategoryCard";
+import { Link } from "react-router";
 
 const Categories = () => {
     const [loading, setLoading] = useState(false);
@@ -29,7 +30,7 @@ const Categories = () => {
     <section className="Categories">
         <h1>Categories</h1>
         <div className="cateCards">
-          {loading?<h2>Loading...</h2>:category?.map((item)=><CategoryCard card={item}/>)}
+          {loading?<h2>Loading...</h2>:category?.map((item,index)=><Link key={index} to={`/category/${item.id}`}><CategoryCard card={item}/></Link>)}
         </div>
     </section>
   )
