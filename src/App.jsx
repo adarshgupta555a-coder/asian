@@ -13,8 +13,8 @@ import UserDashboard from "./Pages/User/UserDashboard";
 import ForgotPassword from "./Pages/User/ForgotPassword";
 import ChangePassword from "./Pages/User/ChangePassword";
 import AdminPanel from "./Pages/admin/AdminPanel";
-import SearchPanel from "./Pages/SearchPanel";
 import CategoryPage from "./Pages/CategoryPage";
+import SearchPage from "./Pages/SearchPage";
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ChangePassword />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
-          <Route path="/search" element={<SearchPanel />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/category/:id" element={<CategoryPage />} />
 
           <Route path="*" element={<NotFoundPage />} />

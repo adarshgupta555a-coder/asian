@@ -67,7 +67,9 @@ let { data: profile, error } = await supabase
             </Link>))}
         </ul>
         <div className="profile">
-          <i className="fa fa-search" />
+          <Link to="/search" style={{ color: "inherit", textDecoration: "none" }}>
+          <i className="fa fa-search"  />
+          </Link>
           {authData?<Link to="/profile" style={{ color: "inherit", textDecoration: "none" }}>
           <i className="fa fa-user" />
           </Link>:<Link to="/signin" style={{ color: "inherit", textDecoration: "none" }}>

@@ -1,0 +1,291 @@
+ .search-container {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .search-header {
+          text-align: center;
+          margin-bottom: 40px;
+        }
+
+        .search-header h1 {
+          font-family: 'Playfair Display', serif;
+          font-size: 36px;
+          font-weight: 700;
+          margin-bottom: 12px;
+        }
+
+        .search-header p {
+          font-size: 14px;
+          color: #666;
+        }
+
+        .search-box {
+          position: relative;
+          margin-bottom: 32px;
+        }
+
+        .search-input-wrapper {
+          display: flex;
+          align-items: center;
+          border: 3px solid #000000;
+          background: #ffffff;
+          transition: all 0.3s ease;
+        }
+
+        .search-input-wrapper:focus-within {
+          border-color: #A5FF00;
+          box-shadow: 6px 6px 0 #A5FF00;
+        }
+
+        .search-icon {
+          padding: 16px 20px;
+          font-size: 20px;
+          color: #000000;
+          border-right: 2px solid #000000;
+        }
+
+        .search-input {
+          flex: 1;
+          padding: 16px 20px;
+          border: none;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 16px;
+          font-weight: 500;
+          background: transparent;
+          color: #000000;
+        }
+
+        .search-input:focus {
+          outline: none;
+        }
+
+        .search-input::placeholder {
+          color: #999;
+        }
+
+        .clear-btn {
+          padding: 16px 20px;
+          background: none;
+          border: none;
+          border-left: 2px solid #000000;
+          font-size: 20px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          color: #000000;
+        }
+
+        .clear-btn:hover {
+          background: #A5FF00;
+        }
+
+        .search-suggestions {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #ffffff;
+          border: 3px solid #000000;
+          border-top: none;
+          max-height: 500px;
+          overflow-y: auto;
+          z-index: 100;
+          box-shadow: 6px 6px 0 #A5FF00;
+        }
+
+        .suggestion-item {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 12px 16px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border-bottom: 2px solid #e0e0e0;
+        }
+
+        .suggestion-item:last-child {
+          border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+          background: #A5FF00;
+        }
+
+        .suggestion-image {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border: 2px solid #000000;
+          flex-shrink: 0;
+        }
+
+        .suggestion-details {
+          flex: 1;
+        }
+
+        .suggestion-name {
+          font-size: 15px;
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+
+        .suggestion-category {
+          font-size: 12px;
+          color: #666;
+        }
+
+        .suggestion-price {
+          font-size: 16px;
+          font-weight: 700;
+          color: #000000;
+        }
+
+        .no-results {
+          padding: 32px 20px;
+          text-align: center;
+          color: #666;
+        }
+
+        .results-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 24px;
+        }
+
+        .product-card {
+          border: 2px solid #000000;
+          background: #ffffff;
+          transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+          box-shadow: 6px 6px 0 #A5FF00;
+          transform: translate(-3px, -3px);
+        }
+
+        .product-image {
+          width: 100%;
+          height: 280px;
+          overflow: hidden;
+          border-bottom: 2px solid #000000;
+        }
+
+        .product-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+          transform: scale(1.05);
+        }
+
+        .product-info {
+          padding: 16px;
+        }
+
+        .product-info h3 {
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+
+        .product-category {
+          font-size: 12px;
+          color: #666;
+          margin-bottom: 8px;
+        }
+
+        .product-price {
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 12px;
+        }
+
+        .add-to-cart {
+          width: 100%;
+          padding: 10px;
+          background: #A5FF00;
+          color: #000000;
+          border: 2px solid #000000;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          font-size: 13px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-transform: uppercase;
+        }
+
+        .add-to-cart:hover {
+          background: #000000;
+          color: #A5FF00;
+        }
+
+        .search-info {
+          margin-bottom: 24px;
+          padding: 16px;
+          background: #f9f9f9;
+          border: 2px solid #000000;
+        }
+
+        .search-info h2 {
+          font-family: 'Playfair Display', serif;
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 8px;
+        }
+
+        .search-info p {
+          font-size: 14px;
+          color: #666;
+        }
+
+        @media (max-width: 768px) {
+          .search-header h1 {
+            font-size: 28px;
+          }
+
+          .search-icon,
+          .clear-btn {
+            padding: 12px 16px;
+            font-size: 18px;
+          }
+
+          .search-input {
+            padding: 12px 16px;
+            font-size: 14px;
+          }
+
+          .results-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+          }
+
+          .suggestion-item {
+            padding: 10px 12px;
+          }
+
+          .suggestion-image {
+            width: 50px;
+            height: 50px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .search-container {
+            padding: 0;
+          }
+
+          .search-header h1 {
+            font-size: 24px;
+          }
+
+          .results-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .product-image {
+            height: 240px;
+          }
+        }
