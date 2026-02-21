@@ -171,6 +171,10 @@ export default function AdminPanel() {
             {modalType === 'product' && (
               <div>
                 <div className="form-group">
+                  <label>Product Image</label>
+                  <input type="text" defaultValue={editItem?.image || ''} placeholder="Enter product Image" />
+                </div>
+                <div className="form-group">
                   <label>Product Name</label>
                   <input type="text" defaultValue={editItem?.name || ''} placeholder="Enter product name" />
                 </div>

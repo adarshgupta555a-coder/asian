@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "../../css/Login.css";
 import  supabase  from '../../Database/supabase';
 import { useNavigate } from 'react-router';
+import { FetchCartThunk } from '../../store/cartThunk';
 const Login = () => {
   const navigate = useNavigate()
   const [user, setUser] = useState({
@@ -41,6 +42,7 @@ const Login = () => {
       return profileErr;
     }else{
     // let localstore = localStorage.setItem("user",JSON.stringify(profile))
+    FetchCartThunk(profile.id)
     navigate("/")
     }
 

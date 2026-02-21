@@ -3,7 +3,7 @@ import "../css/Shop.css"
 import ProductCard from '../Components/shop/productCard'
 import { useSelector } from 'react-redux';
 import supabase from "../Database/supabase"
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 const Shop = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
@@ -19,11 +19,32 @@ const Shop = () => {
     // return()=>{
     //   console.log("closed")
     // }
-  }, [])
+  }, [selectedCategories, sortBy])
 
+  const OnhandleCategories = (e) => {
+    const value = e.target.value;
+    //agar value selectedCategories mein hai toh hatado aur nahi hai toh add kardo
+    setSelectedCategories(prev => prev?.includes(value) ? prev?.filter(item => item !== value) : [...prev, value])
+  }
+
+  const getCategoryIds = async () => {
+    if (selectedCategories.length === 0) return [];
+
+    const { data, error } = await supabase
+      .from("category")
+      .select("id")
+      .in("name", selectedCategories);
+
+    if (error) {
+      console.log(error);
+      return [];
+    }
+
+    return data.map(c => c.id);
+  };
   const getProducts = async () => {
 
-    let { data: product, error } = await supabase
+    let query = supabase
       .from('product')
       .select(`
         id,
@@ -34,8 +55,28 @@ const Shop = () => {
         name
         )
         `)
+
+        //filter category
+    if (selectedCategories.length > 0) {
+      const categoryIds = await getCategoryIds();
+      query = query.in('category_id', categoryIds);
+    }
+
+    //sort price
+    if (sortBy === "low") {
+      query = query.order("price", {ascending: true})
+    }
+
+    if (sortBy === "high") {
+      query = query.order("price", {ascending: false})
+    }
+
+    const { data: product, error } = await query;
+    if (!error) {
       console.log(product)
       setProduct(product)
+    }
+
 
   }
 
@@ -64,10 +105,10 @@ const Shop = () => {
               <input type="checkbox" id="cat" className="acc-toggle" />
               <label htmlFor="cat" className="acc-title">Category</label>
               <div className="acc-content">
-                <label><input type="checkbox" /> Hoodies</label>
-                <label><input type="checkbox" /> T-Shirts</label>
-                <label><input type="checkbox" /> Joggers</label>
-                <label><input type="checkbox" /> Accessories</label>
+                <label><input type="checkbox" onChange={OnhandleCategories} value={"Men Jeans"} /> Men Jeans</label>
+                <label><input type="checkbox" onChange={OnhandleCategories} value={"Men T-Shirts"} /> Men T-Shirts</label>
+                <label><input type="checkbox" onChange={OnhandleCategories} value={"Jeans"} /> Jeans</label>
+                <label><input type="checkbox" onChange={OnhandleCategories} value={"Men Shirts"} /> Men Shirts</label>
               </div>
             </div>
 
@@ -75,14 +116,14 @@ const Shop = () => {
               <input type="checkbox" id="sort-sidebar" className="acc-toggle" />
               <label htmlFor="sort-sidebar" className="acc-title">Sort By</label>
               <div className="acc-content">
-                <label><input type="radio" name="sort-sidebar" /> Price: Low to High</label>
-                <label><input type="radio" name="sort-sidebar" /> Price: High to Low</label>
-                <label><input type="radio" name="sort-sidebar" /> Newest First</label>
-                <label><input type="radio" name="sort-sidebar" /> Popular</label>
+                <label><input type="radio" name="sort-sidebar" onChange={()=>setSortBy("low")} /> Price: Low to High</label>
+                <label><input type="radio" name="sort-sidebar"  onChange={()=>setSortBy("high")} /> Price: High to Low</label>
+                {/* <label><input type="radio" name="sort-sidebar" /> Newest First</label>
+                <label><input type="radio" name="sort-sidebar" /> Popular</label> */}
               </div>
             </div>
 
-            <div className="accordion">
+            {/* <div className="accordion">
               <input type="checkbox" id="size" className="acc-toggle" />
               <label htmlFor="size" className="acc-title">Size</label>
               <div className="acc-content">
@@ -92,9 +133,9 @@ const Shop = () => {
                 <label><input type="checkbox" /> XL</label>
                 <label><input type="checkbox" /> XXL</label>
               </div>
-            </div>
+            </div> */}
 
-            <div className="accordion">
+            {/* <div className="accordion">
               <input type="checkbox" id="price" className="acc-toggle" />
               <label htmlFor="price" className="acc-title">Price Range</label>
               <div className="acc-content">
@@ -103,7 +144,7 @@ const Shop = () => {
                 <label><input type="checkbox" /> ₹1500 - ₹2000</label>
                 <label><input type="checkbox" /> Above ₹2000</label>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="shop-items">
@@ -114,10 +155,10 @@ const Shop = () => {
                   <input type="checkbox" id="sort-top" className="acc-toggle" />
                   <label htmlFor="sort-top" className="acc-title">Sort By</label>
                   <div className="acc-content">
-                    <label><input type="radio" name="sort-top" /> Price: Low to High</label>
-                    <label><input type="radio" name="sort-top" /> Price: High to Low</label>
-                    <label><input type="radio" name="sort-top" /> Newest First</label>
-                    <label><input type="radio" name="sort-top" /> Popular</label>
+                    <label><input type="radio" name="sort-top" onChange={()=>setSortBy("low")}  /> Price: Low to High</label>
+                    <label><input type="radio" name="sort-top" onChange={()=>setSortBy("high")}  /> Price: High to Low</label>
+                    {/* <label><input type="radio" name="sort-top" /> Newest First</label>
+                    <label><input type="radio" name="sort-top" /> Popular</label> */}
                   </div>
                 </div>
               </div>
@@ -125,7 +166,7 @@ const Shop = () => {
 
             <div className="card">
               {products?.map(product => (
-                <ProductCard  {...product}  key={product?.id} />
+                <ProductCard  {...product} key={product?.id} />
               ))}
             </div>
           </div>

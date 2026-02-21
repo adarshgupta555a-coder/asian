@@ -12,6 +12,7 @@ const ProductSection = ({ products, handleModel }) => {
 
   const handleAdd = (type) => {
    handleModel(type);
+   
   };
 
   const updateOrderStatus = (orderId, newStatus) => {
