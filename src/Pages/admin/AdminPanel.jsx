@@ -6,6 +6,9 @@ import UserSection from '../../Components/admin/UserSection';
 import CategoriesSection from '../../Components/admin/CategoriesSection';
 import OrderSection from '../../Components/admin/OrderSection';
 import supabase from "../../Database/supabase";
+import ProductsModal from '../../Components/admin/Modals/ProductsModal';
+import UsersModal from '../../Components/admin/Modals/UsersModal';
+import CategoryModal from '../../Components/admin/Modals/CategoryModal';
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -33,6 +36,7 @@ export default function AdminPanel() {
       supabase.from("product").select(`
         id,
         name,
+        description,
         price,
         image_url,
         stock,
@@ -143,7 +147,7 @@ export default function AdminPanel() {
           )}
 
           {activeTab === 'products' && (
-            <ProductSection products={products} handleModel={handleModel} />
+            <ProductSection products={products} handleModel={handleModel} setProducts={setProducts} />
           )}
 
           {activeTab === 'users' && (
@@ -169,53 +173,15 @@ export default function AdminPanel() {
             </div>
 
             {modalType === 'product' && (
-              <div>
-                <div className="form-group">
-                  <label>Product Image</label>
-                  <input type="text" defaultValue={editItem?.image || ''} placeholder="Enter product Image" />
-                </div>
-                <div className="form-group">
-                  <label>Product Name</label>
-                  <input type="text" defaultValue={editItem?.name || ''} placeholder="Enter product name" />
-                </div>
-                <div className="form-group">
-                  <label>Price</label>
-                  <input type="number" defaultValue={editItem?.price || ''} placeholder="Enter price" />
-                </div>
-                <div className="form-group">
-                  <label>Category</label>
-                  <select defaultValue={editItem?.category || ''}>
-                    <option value="">Select category</option>
-                    <option value="Hoodies">Hoodies</option>
-                    <option value="Sweatshirts">Sweatshirts</option>
-                  </select>
-                </div>
-                <button className="btn btn-primary" onClick={() => setShowModal(false)}>{editItem ? 'Update' : 'Add'} Product</button>
-              </div>
+              <ProductsModal editItem={editItem} setShowModal={setShowModal} setProducts={setProducts} categories={categories}/>
             )}
 
             {modalType === 'user' && (
-              <div>
-                <div className="form-group">
-                  <label>Name</label>
-                  <input type="text" defaultValue={editItem?.name || ''} />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input type="email" defaultValue={editItem?.email || ''} />
-                </div>
-                <button className="btn btn-primary" onClick={() => setShowModal(false)}>{editItem ? 'Update' : 'Add'} User</button>
-              </div>
+             <UsersModal editItem={editItem} setShowModal={setShowModal} setUsers={setUsers}/>
             )}
 
             {modalType === 'category' && (
-              <div>
-                <div className="form-group">
-                  <label>Category Name</label>
-                  <input type="text" defaultValue={editItem?.name || ''} />
-                </div>
-                <button className="btn btn-primary" onClick={() => setShowModal(false)}>{editItem ? 'Update' : 'Add'} Category</button>
-              </div>
+            <CategoryModal editItem={editItem} setShowModal={setShowModal} setCategories={setCategories}/>
             )}
           </div>
         </div>

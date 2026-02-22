@@ -1,24 +1,40 @@
 import React from 'react'
+import supabase from '../../Database/supabase';
+import { getAllproducts } from '../../utils/getAllProduct';
 
-const ProductSection = ({ products, handleModel }) => {
+const ProductSection = ({ products, handleModel, setProducts }) => {
+  const handleDelete = async (id) => {
+    console.log(id)
+    const { error } = await supabase
+      .from('product')
+      .delete()
+      .eq('id', id)
 
-  const handleDelete = (type, id) => {
-   
+      if (!error) {
+        getAllproducts().then((res=>{
+          setProducts(res)
+        }))
+      } else{
+        console.log(error)
+      }
+
   };
 
   const handleEdit = (type, item) => {
-  handleModel(type,item);
+    handleModel(type, item);
   };
 
   const handleAdd = (type) => {
-   handleModel(type);
-   
+    handleModel(type);
+
   };
 
   const updateOrderStatus = (orderId, newStatus) => {
-   
+
   };
-  
+
+   
+
   return (
     <div className="content-card">
       <div className="card-header">
@@ -38,7 +54,7 @@ const ProductSection = ({ products, handleModel }) => {
               <td>
                 <div className="actions">
                   <button className="icon-btn" onClick={() => handleEdit('product', p)}>✏️</button>
-                  <button className="icon-btn" onClick={() => handleDelete('product', p.id)}>🗑️</button>
+                  <button className="icon-btn" onClick={() => handleDelete(p.id)}>🗑️</button>
                 </div>
               </td>
             </tr>
