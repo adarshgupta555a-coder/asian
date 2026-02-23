@@ -155,7 +155,7 @@ export default function AdminPanel() {
           )}
 
           {activeTab === 'categories' && (
-            <CategoriesSection categories={categories} handleModel={handleModel} />
+            <CategoriesSection categories={categories} handleModel={handleModel} setCategories={setCategories}  />
           )}
 
           {activeTab === 'orders' && (

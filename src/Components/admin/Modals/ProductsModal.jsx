@@ -20,6 +20,11 @@ const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
     const OnhandleProduct = async (e) => {
         e.preventDefault();
         console.log(product)
+         for (const [key, value] of Object.entries(product)) {
+            if (value == "") {
+                return;
+            }
+         }
         if (!editItem) {
             const { error } = await supabase
                 .from('product')

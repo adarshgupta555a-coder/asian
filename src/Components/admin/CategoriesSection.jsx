@@ -1,9 +1,23 @@
 import React from 'react'
+import { getAllcategory } from '../../utils/getAllCategory';
+import supabase from '../../Database/supabase';
 
-const CategoriesSection = ({ categories, handleModel }) => {
+const CategoriesSection = ({ categories, handleModel, setCategories }) => {
 
-  const handleDelete = (type, id) => {
+  const handleDelete = async (type, id) => {
+ console.log(id)
+    const { error } = await supabase
+      .from('category')
+      .delete()
+      .eq('id', id)
 
+      if (!error) {
+        getAllcategory().then((res=>{
+          setCategories(res)
+        }))
+      } else{
+        console.log(error)
+      }
   };
 
    const handleEdit = (type, item) => {
