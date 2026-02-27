@@ -56,11 +56,11 @@ const Footer = () => {
                         </div>
                         <div className="contact-item">
                             <i className="fas fa-phone"></i>
-                            <span>(123) 456-7890</span>
+                            <span>+91 6351098513</span>
                         </div>
                         <div className="contact-item">
                             <i className="fas fa-envelope"></i>
-                            <span>ecommerce@gmail.com</span>
+                            <span>adarshgupta555a@gmail.com</span>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-bottom">
-                <p>&copy; 2024 E-Commerce Store. All rights reserved. | Designed with <a href="#">passion</a></p>
+                <p>&copy; 2025 E-Commerce Store. All rights reserved. | Designed with <a href="#">AR and Coodify</a></p>
             </div>
         </div>
     </footer>

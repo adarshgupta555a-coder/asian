@@ -15,12 +15,15 @@ import ChangePassword from "./Pages/User/ChangePassword";
 import AdminPanel from "./Pages/admin/AdminPanel";
 import CategoryPage from "./Pages/CategoryPage";
 import SearchPage from "./Pages/SearchPage";
-
+import AboutPage from "./Pages/AboutPage";
+import CategoriesPage from "./Pages/CategoriesPage";
+import { ToastContainer } from "react-toastify";
 function App() {
 
   return (
     <>
       <BrowserRouter>
+      <ToastContainer/>
           <Navbar/>
         
         <Routes>
@@ -37,7 +40,9 @@ function App() {
           <Route path="/reset-password" element={<ChangePassword />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/category/:id" element={<CategoryPage />} />
+          <Route path="/category/:slug" element={<CategoryPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

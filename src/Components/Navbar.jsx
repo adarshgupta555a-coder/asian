@@ -5,35 +5,47 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AuthAction } from '../store/AuthSlice';
 import supabase from "../Database/supabase";
 import { FetchCartThunk } from '../store/cartThunk';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
-  const authData = useSelector((state)=>state.Auth.value);
-  const cartData = useSelector((state)=>state?.Cart)
+  const authData = useSelector((state) => state.Auth.value);
+  const cartData = useSelector((state) => state?.Cart)
   const dispatch = useDispatch()
   const [mobile, setMobile] = useState(false);
+
   useEffect(() => {
     if (authData === null) {
-      getUserData().then((res)=>{
+      getUserData().then((res) => {
         console.log(res)
-          dispatch(AuthAction.getSession(res[0]));
-          dispatch(FetchCartThunk(res[0].id))
+        dispatch(AuthAction.getSession(res[0]));
+        dispatch(FetchCartThunk(res[0].id))
       })
     }
   }, [])
 
-  const getUserData =async () => {
+  const getUserData = async () => {
+
+    const { data: { user }, error: userErr } = await supabase.auth.getUser()
+    console.log(userErr);
+
+    if (userErr) {
+      toast.error("something went wrong!")
+      return;
+    }
     
-const { data: { user } } = await supabase.auth.getUser()
-let { data: profile, error } = await supabase
-  .from('profile')
-  .select("*")
-  .eq('id', user.id)
+    let { data: profile, error } = await supabase
+      .from('profile')
+      .select("*")
+      .eq('id', user.id)
     console.log(profile)
-  if (!error) {
-    return profile;
-  } else{
-    return ""
-  }
+    if (!error) {
+      toast.success("Login successfully")
+      return profile;
+    } else {
+      console.log(error)
+      toast.error("something went wrong!")
+      return ""
+    }
   };
 
 
@@ -47,9 +59,10 @@ let { data: profile, error } = await supabase
 
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'Product', href: 'shop' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Shop', href: 'shop' },
+    { name: 'About', href: '/about' },
+    { name: 'Categories', href: '/categories' },
+
   ];
 
   return (
@@ -68,17 +81,17 @@ let { data: profile, error } = await supabase
         </ul>
         <div className="profile">
           <Link to="/search" style={{ color: "inherit", textDecoration: "none" }}>
-          <i className="fa fa-search"  />
+            <i className="fa fa-search" />
           </Link>
-          {authData?<Link to="/profile" style={{ color: "inherit", textDecoration: "none" }}>
-          <i className="fa fa-user" />
-          </Link>:<Link to="/signin" style={{ color: "inherit", textDecoration: "none" }}>
-          <i className="fa fa-user" />
+          {authData ? <Link to="/profile" style={{ color: "inherit", textDecoration: "none" }}>
+            <i className="fa fa-user" />
+          </Link> : <Link to="/signin" style={{ color: "inherit", textDecoration: "none" }}>
+            <i className="fa fa-user" />
           </Link>}
           <Link to="/cart" style={{ color: "inherit", textDecoration: "none" }}>
             <div className="basket">
               <i className="fa fa-shopping-basket" />
-              <span className="badge">{cartData?.length||0}</span>
+              <span className="badge">{cartData?.length || 0}</span>
             </div>
           </Link>
         </div>

@@ -5,6 +5,8 @@ import { Link } from "react-router";
 
 const FeaturedProduct = () => {
     const [products, setProduct] = useState(null);
+    const [loading , setLoading] = useState(false);
+    const [Error , setError] = useState(false);
 
     useEffect(() => {
         getProducts()
@@ -14,7 +16,7 @@ const FeaturedProduct = () => {
     }, [])
 
     const getProducts = async () => {
-
+        setLoading(true);
         let { data: product, error } = await supabase
             .from('product')
             .select(`
@@ -22,23 +24,34 @@ const FeaturedProduct = () => {
         name,
         image_url,
         price,
+        featured,
         category(
         name
         )
         `)
+        .eq("featured", true)
         console.log(product)
+        if (error) {
+            console.log(error)
+            setLoading(false);
+            setError(true)
+            return;
+        } else{
         setProduct(product)
+        setLoading(false)
+        }
+        
 
     }
     return (
         <section className="featured">
             <h1>Featured Product</h1>
             <div className="products">
-                {products?.map((product) => (
-                    <Link to={`/product-page/${product.id}`} style={{textDecoration:"none"}} key={product.id}>
-                        <ProductCard  {...product} />
-                    </Link>
+             { loading ? (<center><h1>Loading...</h1></center>):Error ? (<center><h1>Products not found.</h1></center>):  (<>{products?.map((product, index) => (
+                    
+                       <ProductCard  {...product} key={index} />
                 ))}
+                </>)}
             </div>
         </section>
     )

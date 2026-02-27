@@ -1,20 +1,38 @@
-import React from 'react'
-
-const OrderSection = ({ orders,handleModel }) => {
+import React, { useState } from 'react'
+import supabase from '../../Database/supabase';
+import { toast } from 'react-toastify';
+const OrderSection = ({ orders, handleModel }) => {
+    const [status, setStatus] = useState("");
+    
     const handleDelete = (type, id) => {
-      
+
     };
 
     const handleEdit = (type, item) => {
-       handleModel(type,item)
+        handleModel(type, item)
     };
 
     const handleAdd = (type) => {
-       handleModel(type)
+        handleModel(type)
     };
 
-    const updateOrderStatus = () => {
-       
+    const OnupdateOrderStatus = async (id) => {
+        if (status === "") {
+            return;
+        }
+        const { data, error } = await supabase
+            .from('order_items')
+            .update({ status: status })
+            .eq('id', id)
+            .select()
+        if (!error) {
+            console.log(data)
+            toast.success("status updated successfully")
+        } else{
+            console.log(error)
+            toast.error("something went wrong!")
+        }
+
     };
 
     return (
@@ -69,17 +87,20 @@ const OrderSection = ({ orders,handleModel }) => {
                             <img src={order?.product?.image_url} alt={order?.product?.name} className="order-single-img" />
                             <div style={{ flex: 1 }}>
                                 <h4>{order?.product?.name}</h4>
-                                <p style={{ fontSize: '13px', color: '#666', marginTop: '8px' }}>Total: ₹{order?.total}</p>
+                                <p style={{ fontSize: '13px', color: '#666', marginTop: '8px' }}>Total: ₹{order?.price}</p>
                             </div>
                         </div>
-                        <div className="order-actions">
-                            <select className="select-status" value={order?.status} onChange={e => updateOrderStatus(order?.id, e.target.value)}>
-                                <option value="Processing">Processing</option>
-                                <option value="Shipped">Shipped</option>
-                                <option value="Delivered">Delivered</option>
-                            </select>
-                            <button className="btn btn-secondary">View</button>
-                        </div>
+                        {order?.status?.toLowerCase() !== "cancelled" &&
+                            (<div className="order-actions">
+                                <select className="select-status" value={order?.status} onChange={e => setStatus(e.target.value)}>
+                                    <option value="pending">Pending</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="shipped">Shipped</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                                <button className="btn btn-status" onClick={()=>OnupdateOrderStatus(order?.id)}>Change Status</button>
+                            </div>)}
                     </div>
                 ))}
             </div>

@@ -158,10 +158,21 @@
      color: #000000;
  }
 
+ .admin-container .btn-status {
+     background: #fa8b03;
+     color: #000000;
+ }
+
 .admin-container .btn-secondary:hover {
      background: #000000;
      color: #ffffff;
  }
+
+ .admin-container .btn-status:hover {
+     background: #ff0000;
+     color: #000000;
+ }
+
 
 .admin-container .table {
      width: 100%;

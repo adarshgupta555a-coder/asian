@@ -19,7 +19,7 @@ const HomePage = () => {
     <Slider/>
     <FeaturedProduct/>
     <SliderFeature/>
-    <Categories/>
+    <Categories featured={true}/>
     <Contact/>
     <Footer/>
     </>

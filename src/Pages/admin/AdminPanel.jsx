@@ -9,8 +9,13 @@ import supabase from "../../Database/supabase";
 import ProductsModal from '../../Components/admin/Modals/ProductsModal';
 import UsersModal from '../../Components/admin/Modals/UsersModal';
 import CategoryModal from '../../Components/admin/Modals/CategoryModal';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+
 
 export default function AdminPanel() {
+  const authData = useSelector((state) => state.Auth.value);
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -28,8 +33,11 @@ export default function AdminPanel() {
 
 
   useEffect(()=>{
+    if (authData?.role && authData?.role !== "admin") {
+      navigate("/")
+    }
     getFetchAllData();
-  },[])
+  },[authData])
 
   const getFetchAllData = async () => {
     const promises = [

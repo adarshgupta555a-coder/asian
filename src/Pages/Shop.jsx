@@ -11,6 +11,8 @@ const Shop = () => {
   const [showFilters, setShowFilters] = useState(false);
   const authData = useSelector((state) => state.Auth.value);
   const [products, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [Error, setError] = useState(false);
 
   useEffect(() => {
     getProducts()
@@ -37,13 +39,14 @@ const Shop = () => {
 
     if (error) {
       console.log(error);
+      setError(true)
       return [];
     }
 
     return data.map(c => c.id);
   };
   const getProducts = async () => {
-
+    setLoading(true)
     let query = supabase
       .from('product')
       .select(`
@@ -75,11 +78,29 @@ const Shop = () => {
     if (!error) {
       console.log(product)
       setProduct(product)
+      setLoading(false)
+    } else{
+      setError(true)
     }
 
 
   }
 
+  if (loading) {
+    return (<>
+    <center>
+      <h1>Loading...</h1>
+    </center>
+    </>)
+  }
+
+  if (Error) {
+    return (<>
+    <center>
+      <h1>Something went wrong</h1>
+    </center>
+    </>)
+  }
   return (
     <>
 

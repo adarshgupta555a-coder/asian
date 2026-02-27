@@ -12,7 +12,9 @@ const CategoryPage = () => {
   const [showFilters, setShowFilters] = useState(false);
   const authData = useSelector((state) => state.Auth.value);
   const [products, setProduct] = useState(null);
-  const { id } = useParams()
+  const [loading, setLoading] = useState(false);
+  const [Error, setError] = useState(false);
+  const { slug } = useParams()
 
   useEffect(() => {
     getProducts()
@@ -21,27 +23,57 @@ const CategoryPage = () => {
     // return()=>{
     //   console.log("closed")
     // }
-  }, [])
+  }, [sortBy]);
 
   const getProducts = async () => {
-
-
-    let { data: product, error } = await supabase
+    setLoading(true)
+    let query = supabase
       .from('product')
       .select(`
             id,
             name,
             image_url,
             price,
-            category(
-            name
+            category!inner(
+            name,
+            slug
             )
-            `).eq("category_id", id)
-    console.log(product)
-    if (!error) {
-      setProduct(product)
+            `).eq("category.slug", slug)
+
+    //sort price
+    if (sortBy === "low") {
+      query = query.order("price", { ascending: true })
     }
 
+    if (sortBy === "high") {
+      query = query.order("price", { ascending: false })
+    }
+
+    const { data: product, error } = await query;
+    if (!error) {
+      setProduct(product);
+      setLoading(false);
+    } else {
+        setError(true);
+    }
+
+  }
+
+
+  if (loading) {
+    return (<>
+    <center>
+      <h1>Loading...</h1>
+    </center>
+    </>)
+  }
+
+  if (Error) {
+    return (<>
+    <center>
+      <h1>Something went wrong</h1>
+    </center>
+    </>)
   }
   return (
     <>
@@ -60,10 +92,10 @@ const CategoryPage = () => {
           </button>
 
           <div className={`side-filter ${showFilters ? 'active' : ''}`}>
-            <h3>Filters</h3>
-            <div className="line"></div>
+            {/* <h3>Filters</h3>
+            <div className="line"></div> */}
 
-            <div className="accordion">
+            {/* <div className="accordion">
               <input type="checkbox" id="cat" className="acc-toggle" />
               <label htmlFor="cat" className="acc-title">Category</label>
               <div className="acc-content">
@@ -72,20 +104,20 @@ const CategoryPage = () => {
                 <label><input type="checkbox" /> Joggers</label>
                 <label><input type="checkbox" /> Accessories</label>
               </div>
-            </div>
+            </div> */}
 
             <div className="accordion">
               <input type="checkbox" id="sort-sidebar" className="acc-toggle" />
               <label htmlFor="sort-sidebar" className="acc-title">Sort By</label>
               <div className="acc-content">
-                <label><input type="radio" name="sort-sidebar" /> Price: Low to High</label>
-                <label><input type="radio" name="sort-sidebar" /> Price: High to Low</label>
-                <label><input type="radio" name="sort-sidebar" /> Newest First</label>
-                <label><input type="radio" name="sort-sidebar" /> Popular</label>
+                <label><input type="radio" name="sort-sidebar" onChange={() => setSortBy("low")} /> Price: Low to High</label>
+                <label><input type="radio" name="sort-sidebar" onChange={() => setSortBy("high")} /> Price: High to Low</label>
+                {/* <label><input type="radio" name="sort-sidebar" /> Newest First</label>
+                <label><input type="radio" name="sort-sidebar" /> Popular</label> */}
               </div>
             </div>
 
-            <div className="accordion">
+            {/* <div className="accordion">
               <input type="checkbox" id="size" className="acc-toggle" />
               <label htmlFor="size" className="acc-title">Size</label>
               <div className="acc-content">
@@ -106,7 +138,7 @@ const CategoryPage = () => {
                 <label><input type="checkbox" /> ₹1500 - ₹2000</label>
                 <label><input type="checkbox" /> Above ₹2000</label>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="shop-items">
@@ -117,10 +149,10 @@ const CategoryPage = () => {
                   <input type="checkbox" id="sort-top" className="acc-toggle" />
                   <label htmlFor="sort-top" className="acc-title">Sort By</label>
                   <div className="acc-content">
-                    <label><input type="radio" name="sort-top" /> Price: Low to High</label>
-                    <label><input type="radio" name="sort-top" /> Price: High to Low</label>
-                    <label><input type="radio" name="sort-top" /> Newest First</label>
-                    <label><input type="radio" name="sort-top" /> Popular</label>
+                    <label><input type="radio" name="sort-sidebar" onChange={() => setSortBy("low")} /> Price: Low to High</label>
+                    <label><input type="radio" name="sort-sidebar" onChange={() => setSortBy("high")} /> Price: High to Low</label>
+                    {/* <label><input type="radio" name="sort-top" /> Newest First</label>
+                    <label><input type="radio" name="sort-top" /> Popular</label> */}
                   </div>
                 </div>
               </div>

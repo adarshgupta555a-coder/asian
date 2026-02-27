@@ -161,7 +161,7 @@ const ProductPage = () => {
                             {product?.description}
                         </p>
                         {/* Size Selection */}
-                        <div className="size-section">
+                        {/* <div className="size-section">
                             <h4>Select Size</h4>
                             <div className="size-options">
                                 <input type="radio" name="size" id="size-s" className="size-input" />
@@ -196,9 +196,9 @@ const ProductPage = () => {
                                     XXL
                                 </label>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Color Selection */}
-                        <div className="color-section">
+                        {/* <div className="color-section">
                             <h4>Select Color</h4>
                             <div className="color-options">
                                 <input
@@ -247,7 +247,7 @@ const ProductPage = () => {
                                     style={{ background: "#ffffff" }}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         {/* Quantity */}
                         <div className="quantity-section">
                             <h4>Quantity</h4>
@@ -275,7 +275,7 @@ const ProductPage = () => {
                             </button> : <button className="add-to-cart-btn" onClick={increaseQty}>
                                 Add to Cart
                             </button>}
-                            <button className="wishlist-btn">♥</button>
+                            {/* <button className="wishlist-btn">♥</button> */}
                         </div>
                         {/* Product Features */}
                         <div className="product-features">
