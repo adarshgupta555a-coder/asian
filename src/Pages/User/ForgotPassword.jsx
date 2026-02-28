@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import "../../css/ForgotPassword.css"
 import { Link } from 'react-router';
 import supabase from '../../Database/supabase';
+import { toast } from 'react-toastify';
+
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +22,9 @@ export default function ForgotPassword() {
             if (!error) {
                 setIsSubmitted(false);
                 setEmail('');
+                toast.success("Confirm link sended to your gmail.")
+            } else {
+                toast.error("email nahi ja raha hai.")
             }
 
         }

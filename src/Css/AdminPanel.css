@@ -142,6 +142,21 @@
      transition: all 0.3s ease;
      text-transform: uppercase;
  }
+ .btn {
+     padding: 12px 24px;
+     font-family: 'Montserrat', sans-serif;
+     font-weight: 600;
+     font-size: 14px;
+     border: 2px solid #000000;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     text-transform: uppercase;
+ }
+
+ .btn-primary {
+     background: #A5FF00;
+     color: #000000;
+ }
 
 .admin-container .btn-primary {
      background: #A5FF00;

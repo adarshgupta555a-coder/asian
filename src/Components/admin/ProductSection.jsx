@@ -1,6 +1,7 @@
 import React from 'react'
 import supabase from '../../Database/supabase';
 import { getAllproducts } from '../../utils/getAllProduct';
+import { toast } from 'react-toastify';
 
 const ProductSection = ({ products, handleModel, setProducts }) => {
   const handleDelete = async (id) => {
@@ -11,10 +12,12 @@ const ProductSection = ({ products, handleModel, setProducts }) => {
       .eq('id', id)
 
       if (!error) {
+        toast.success("Product deleted successfully.")
         getAllproducts().then((res=>{
           setProducts(res)
         }))
       } else{
+        toast.error("Something went wrong!")
         console.log(error)
       }
 

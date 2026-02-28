@@ -17,12 +17,12 @@ const OrdersCards = ({item,order,cancelOrder}) => {
               <span className={`order-status status-${item?.status}`}>{item?.status}</span>
             </div>
             <div className="order-actions">
-              <button
+              {/* <button
                 className="action-btn track-btn"
                 onclick="showSection('track')"
               >
                 Track
-              </button>
+              </button> */}
               {item?.status !== "cancelled" && <button
                 className="action-btn cancel-btn"
                 onClick={()=>cancelOrder(item?.id, item?.order_id)}

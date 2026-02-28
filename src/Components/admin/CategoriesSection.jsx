@@ -1,31 +1,34 @@
 import React from 'react'
 import { getAllcategory } from '../../utils/getAllCategory';
 import supabase from '../../Database/supabase';
+import { toast } from 'react-toastify';
 
 const CategoriesSection = ({ categories, handleModel, setCategories }) => {
 
   const handleDelete = async (type, id) => {
- console.log(id)
+    console.log(id)
     const { error } = await supabase
       .from('category')
       .delete()
       .eq('id', id)
 
-      if (!error) {
-        getAllcategory().then((res=>{
-          setCategories(res)
-        }))
-      } else{
-        console.log(error)
-      }
+    if (!error) {
+      toast.success("category deleted successfully.")
+      getAllcategory().then((res => {
+        setCategories(res)
+      }))
+    } else {
+      toast.error("Something went wrong!")
+      console.log(error)
+    }
   };
 
-   const handleEdit = (type, item) => {
-  handleModel(type,item);
+  const handleEdit = (type, item) => {
+    handleModel(type, item);
   };
 
   const handleAdd = (type) => {
-   handleModel(type);
+    handleModel(type);
   };
 
   return (

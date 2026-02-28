@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import supabase from '../../Database/supabase';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 const ProfileSet = () => {
   const userData = useSelector((state) => state.Auth.value);
@@ -46,7 +47,10 @@ const ProfileSet = () => {
 
     console.log(data);
     if (error) {
+      toast.error("Something went wrong!")
       console.log(error);
+    } else {
+      toast.success("apka profile update ho gaya.")
     }
 
 
@@ -148,7 +152,7 @@ const ProfileSet = () => {
       <div className="section-card">
         <h2 className="section-title">Change Password</h2>
         <form className="profile-form">
-          <div className="form-group full-width">
+          {/* <div className="form-group full-width">
             <label htmlFor="currentPassword">Current Password</label>
             <input type="password" id="currentPassword" required="" />
           </div>
@@ -159,15 +163,14 @@ const ProfileSet = () => {
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input type="password" id="confirmPassword" required="" />
-          </div>
+          </div> */}
           <div className="form-group full-width">
-            <button
+            {/* <button
               type="submit"
               className="update-btn"
-              onclick="event.preventDefault(); alert('Password changed successfully!')"
             >
               Change Password
-            </button>
+            </button> */}
 
               <button
               type="submit"

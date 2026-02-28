@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "../../css/UserDashboard.css";
 import supabase from '../../Database/supabase';
+import { toast } from 'react-toastify';
 
 const ChangePassword = () => {
   const [user, setUser] = useState({
@@ -27,7 +28,7 @@ const ChangePassword = () => {
     const {NewPassword, ConPassword} = user;
 
     if (NewPassword !== ConPassword) {
-      console.log("not matched")
+      toast.warning("Password and Confirm Passwaord are not matched")
      return; 
     }
 
@@ -37,8 +38,10 @@ const ChangePassword = () => {
 
   if (error) {
     console.error(error.message);
+    toast.error("password nahi change ho raha hai.")
   } else {
     console.log("Password reset successfully ✅");
+    toast.success("Password reset successfully ✅")
   }
   }
 

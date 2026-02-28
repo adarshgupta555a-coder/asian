@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import supabase from '../../Database/supabase';
 import { toast } from 'react-toastify';
-const OrderSection = ({ orders, handleModel }) => {
+import { getAllOrders } from '../../utils/getAllOrder';
+
+const OrderSection = ({ orders, setOrders }) => {
     const [status, setStatus] = useState("");
-    
-    const handleDelete = (type, id) => {
 
-    };
+    // const handleDelete = (type, id) => {
 
-    const handleEdit = (type, item) => {
-        handleModel(type, item)
-    };
+    // };
 
-    const handleAdd = (type) => {
-        handleModel(type)
-    };
+    // const handleEdit = (type, item) => {
+    //     handleModel(type, item)
+    // };
+
+    // const handleAdd = (type) => {
+    //     handleModel(type)
+    // };
 
     const OnupdateOrderStatus = async (id) => {
         if (status === "") {
@@ -28,7 +30,10 @@ const OrderSection = ({ orders, handleModel }) => {
         if (!error) {
             console.log(data)
             toast.success("status updated successfully")
-        } else{
+            getAllOrders().then((res => {
+                setOrders(res)
+            }));
+        } else {
             console.log(error)
             toast.error("something went wrong!")
         }
@@ -41,7 +46,7 @@ const OrderSection = ({ orders, handleModel }) => {
                 <div className="card-header">
                     <h2 className="card-title">Multi-Item Orders</h2>
                 </div>
-                {orders?.filter(o => o?.items?.length > 1).map(order => (
+                {/* {orders && orders?.filter(o => o?.items?.length > 1).map(order => (
                     <div key={order?.id} className="order-card">
                         <div className="order-header">
                             <div>
@@ -57,22 +62,24 @@ const OrderSection = ({ orders, handleModel }) => {
                         </div>
                         <div className="order-actions">
                             <strong>₹{order?.total}</strong>
-                            <select className="select-status" value={order?.status} onChange={e => updateOrderStatus(order?.id, e.target.value)}>
-                                <option value="Processing">Processing</option>
-                                <option value="Shipped">Shipped</option>
-                                <option value="Delivered">Delivered</option>
+                            <select className="select-status" value={status||order?.status} onChange={e => setStatus(e.target.value)}>
+                                <option value="pending">Pending</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="shipped">Shipped</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>
                             </select>
                             <button className="btn btn-secondary">View</button>
                         </div>
                     </div>
-                ))}
+                ))} */}
             </div>
 
             <div className="content-card">
                 <div className="card-header">
                     <h2 className="card-title">Single-Item Orders</h2>
                 </div>
-                {orders?.map(order => (
+                {orders && orders?.map(order => (
                     <div key={order?.id} className="order-card">
                         <div className="order-header">
                             <div>
@@ -92,14 +99,14 @@ const OrderSection = ({ orders, handleModel }) => {
                         </div>
                         {order?.status?.toLowerCase() !== "cancelled" &&
                             (<div className="order-actions">
-                                <select className="select-status" value={order?.status} onChange={e => setStatus(e.target.value)}>
+                                <select className="select-status" defaultValue={order?.status} onChange={e => setStatus(e.target.value)}>
                                     <option value="pending">Pending</option>
                                     <option value="paid">Paid</option>
                                     <option value="shipped">Shipped</option>
                                     <option value="delivered">Delivered</option>
                                     <option value="cancelled">Cancelled</option>
                                 </select>
-                                <button className="btn btn-status" onClick={()=>OnupdateOrderStatus(order?.id)}>Change Status</button>
+                                <button className="btn btn-status" onClick={() => OnupdateOrderStatus(order?.id)}>Change Status</button>
                             </div>)}
                     </div>
                 ))}

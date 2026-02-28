@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { FetchCartThunk } from '../../store/cartThunk';
 import Payment from '../../Pages/Payment';
+import { toast } from 'react-toastify';
 
 const CheckoutContent = ({ step, OnhandleStep }) => {
   const [cart, setCart] = useState(null);
@@ -61,11 +62,12 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
   const Onsubmit = async () => {
     console.log(checkout)
     if (checkout?.delivery_option === "" || checkout?.payment_mode === "") {
-      alert("insert the payment and delivery option.");
+      toast.warning("insert the payment and delivery option.");
       return;
     }
 
     if (step < 3) {
+      toast.info("go to the new step")
       OnhandleStep();
       return;
     }
@@ -83,7 +85,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
 
     const updates = cart.map(item =>{
       if (item.product.stock < item.quantity) {
-        alert("stock is not availble")
+        toast.warning("stock is not availble")
         return;
       }
       return supabase
@@ -101,6 +103,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
 
     if (failed.length) {
       console.error("Some stock updates failed", failed);
+      toast.error("Some stock updates failed")
       return;
     }
 
@@ -126,6 +129,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
     console.log(order)
     if (OrderErr) {
       console.log(error);
+      toast.error("order mein dikat hai bhai!")
       return;
     }
 
@@ -139,6 +143,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
       .select()
 
     if (error) {
+      toast.error("order item mein dikat hai!")
       console.log(error);
       return;
     }
@@ -150,13 +155,17 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
       .eq("user_id", userData?.id); // trick to delete all rows
 
     if (CartErr) {
+      toast.error("cart mein dikat hai!")
       console.log(CartErr);
       return CartErr;
     }
 
 
     dispatch(FetchCartThunk(userData?.user_id))
-    alert("order placed")
+    toast.success("order placed")
+    toast("Thank you for Order!",{
+      position: "top-center"
+    });
     OnhandleStep();
 
   }

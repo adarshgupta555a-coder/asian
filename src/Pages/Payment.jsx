@@ -1,9 +1,18 @@
 import GooglePayButton from "@google-pay/button-react";
-
+import { toast } from "react-toastify";
 export default function Payment({totalData,Onpayment}) {
 
   const handleSuccess = async () => {
    console.log("payment successfull")
+    toast.success("payment is succesfully completed")
+//     toast.promise(
+//   Onpayment(),
+//   {
+//     pending: "Adding to cart...",
+//     success: "Added successfully 👌",
+//     error: "Failed to add ❌"
+//   }
+// );
    Onpayment()
   };
 

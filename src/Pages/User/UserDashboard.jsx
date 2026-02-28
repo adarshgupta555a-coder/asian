@@ -9,6 +9,7 @@ import OverView from '../../Components/userDashboard/OverView';
 import { useSelector } from 'react-redux';
 import supabase from "../../Database/supabase";
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 const UserDashboard = () => {
   const [menu, setMenu] = useState(0);
@@ -48,7 +49,8 @@ const UserDashboard = () => {
     status,
     product (
       name,
-      image_url
+      image_url,
+      stock
     )
   `)
       .in("order_id", orderIds);
@@ -56,6 +58,8 @@ const UserDashboard = () => {
     console.log(items)
     if (!error) {
       setOrders(items)
+    } else{
+      toast.error("Something went wrong!")
     }
 
 
@@ -90,8 +94,11 @@ const UserDashboard = () => {
 
     console.log(data)
     if (error) {
+      toast.error("Something went wrong!")
       console.log(error);
       return;
+    } else {
+      toast.success("order cancelled.")
     }
 
 
@@ -105,8 +112,16 @@ const UserDashboard = () => {
 
     if (OrderErr) {
       console.log(OrderErr);
+      toast.error("Order total price kam nahi ho raha!")
       return;
     }
+
+
+    // const { data: product, error: productErr } = await supabase
+    //   .from('product')
+    //   .update({ stock: totalPrice - (Price * Qty) })
+    //   .eq('id', orderId)
+    //   .select()
 
     getOrders()
 
@@ -117,6 +132,7 @@ const UserDashboard = () => {
 
     if (error) {
       console.log(error);
+      toast.error("logout nahi ho raha hai!")
       return;
     }
 
@@ -162,11 +178,11 @@ const UserDashboard = () => {
                 Cancelled Orders
               </a>
             </li>
-            <li className="menu-item">
+            {/* <li className="menu-item">
               <a href="#" onClick={() => setMenu(3)}>
                 Track Orders
               </a>
-            </li>
+            </li> */}
             <li className="menu-item">
               <a href="#" onClick={() => setMenu(4)}>
                 Wishlist
@@ -187,7 +203,7 @@ const UserDashboard = () => {
           {/* Cancelled Orders */}
           {menu === 2 && <CancelOrder orders={orders} order={orderGroup} />}
           {/* Track Order */}
-          {menu === 3 && <TrackOrder />}
+          {/* {menu === 3 && <TrackOrder />} */}
           {/* Wishlist */}
           {menu === 4 && <WishList />}
           {/* Profile Settings */}

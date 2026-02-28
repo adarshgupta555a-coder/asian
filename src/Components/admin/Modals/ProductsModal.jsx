@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import supabase from '../../../Database/supabase';
 import { getAllproducts } from '../../../utils/getAllProduct';
+import { toast } from 'react-toastify';
 
 const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
     const [product, setProduct] = useState({
@@ -22,6 +23,7 @@ const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
         console.log(product)
          for (const [key, value] of Object.entries(product)) {
             if (value == "") {
+                toast.warning("please fill data");
                 return;
             }
          }
@@ -41,8 +43,10 @@ const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
                         setProducts(res)
                         setShowModal(false)
                     }))
+                    toast.success("Product successfully added");
                 }
             } else {
+                toast.error("Something went wrong!")
                 console.log(error)
             }
         } else {
@@ -58,7 +62,7 @@ const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
             console.log(UpdateProduct)
             if (Object.entries(UpdateProduct).length == 0) {
                 console.log(Object.entries(UpdateProduct).length)
-                alert("please insert data")
+                toast.warning("please insert data")
                 return;
             }
 
@@ -74,6 +78,10 @@ const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
                     setProducts(res)
                     setShowModal(false)
                 }))
+            toast.success("Product successfully updated");
+            } else {
+                console.log(error);
+                toast.error("Something went wrong!")
             }
 
         }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import supabase from '../../../Database/supabase';
 import { getAllcategory } from '../../../utils/getAllCategory';
+import { toast } from 'react-toastify';
 
 const CategoryModal = ({ editItem, setShowModal, setCategories }) => {
   const [category, setCategory] = useState({
@@ -23,6 +24,7 @@ const CategoryModal = ({ editItem, setShowModal, setCategories }) => {
       //all value are check karo agar koi bhi values khali hai toh return kardo 
       for (const [key, value] of Object.entries(category)) {
         if (value == "") {
+          toast.warning("please fill data")
           return;
         }
       }
@@ -37,7 +39,9 @@ const CategoryModal = ({ editItem, setShowModal, setCategories }) => {
           setCategories(res)
           setShowModal(false)
         }))
+        toast.success("Category added successfully.")
       } else {
+        toast.error("Something went wrong!")
         console.log(error)
       }
     } else {
@@ -52,7 +56,7 @@ const CategoryModal = ({ editItem, setShowModal, setCategories }) => {
       console.log(UpdateCategory)
       if (Object.entries(UpdateCategory).length == 0) {
         console.log(Object.entries(UpdateCategory).length)
-        alert("please insert data")
+        toast.warning("please insert data")
         return;
       }
 
@@ -67,6 +71,10 @@ const CategoryModal = ({ editItem, setShowModal, setCategories }) => {
                     setCategories(res)
                     setShowModal(false)
                 }))
+                toast.success("Category updated successfully")
+            } else {
+              console.log(error)
+              toast.error("Something went wrong!")      
             }
 
     }

@@ -67,7 +67,8 @@ export default function AdminPanel() {
         ),
         product (
         image_url,
-        name
+        name,
+        price
         )
         `),
       supabase.from("category").select("*")
@@ -167,7 +168,7 @@ export default function AdminPanel() {
           )}
 
           {activeTab === 'orders' && (
-            <OrderSection orders={orders} handleModel={handleModel} />
+            <OrderSection orders={orders} setOrders={setOrders} />
           )}
         </main>
       </div>

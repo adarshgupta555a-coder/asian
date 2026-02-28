@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import "../../css/Register.css"
-import supabase  from '../../Database/supabase'
-import { useNavigate } from 'react-router'
+import supabase from '../../Database/supabase'
+import { Link, useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+
 const Register = () => {
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [user, setData] = useState({
     name: "",
     email: "",
@@ -23,57 +25,149 @@ const Register = () => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   }
-const onHandleRegister = async (e) => {
-  e.preventDefault();
 
-  if (loading) return;
-  setLoading(true);
 
-  try {
-    // 1️⃣ Signup
-    const { data, error } = await supabase.auth.signUp({
-      email: user.email,
-      password: user.password,
-    });
+  const validateUser = (user) => {
+    const errors = {};
 
-    if (error) {
-      console.error("Signup error:", error.message);
-      return;
+    // Name validation
+    if (!user.name.trim()) {
+      errors.name = "Name is required";
     }
 
-    const userId = data.user.id;
-
-    const { error: profileError } = await supabase
-      .from("profile")
-      .insert([
-        {
-          id: userId,   
-          name: user.name,
-          email: user.email,
-          age: user.age,
-          phone: user.phone,
-          gender: user.gender,
-          address: user.address,
-          pincode: user.pincode,
-          city: user.city,
-          state: user.state,
-          country: user.country,
-        },
-      ]);
-
-    if (profileError) {
-      console.error("Profile error:", profileError.message);
-      return;
+    // Email validation
+    if (!user.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(user.email)) {
+      errors.email = "Invalid email format";
     }
 
-    console.log("User registered successfully ✅");
-    navigate("/signin")
-  } catch (err) {
-    console.error("Unexpected error:", err);
-  } finally {
-    setLoading(false); 
-  }
-};
+    // Age validation
+    if (!user.age) {
+      errors.age = "Age is required";
+    } else if (user.age < 1 || user.age > 120) {
+      errors.age = "Enter a valid age";
+    }
+
+    // Phone validation (10 digits)
+    if (!user.phone.trim()) {
+      errors.phone = "Phone number is required";
+    } else if (!/^[0-9]{10}$/.test(user.phone)) {
+      errors.phone = "Phone number must be 10 digits";
+    }
+
+    // Password validation
+    if (!user.password) {
+      errors.password = "Password is required";
+    } else if (user.password.length < 6) {
+      errors.password = "Password must be at least 6 characters";
+    }
+
+    // Gender validation
+    if (!user.gender) {
+      errors.gender = "Gender is required";
+    }
+
+    // Address validation
+    if (!user.address.trim()) {
+      errors.address = "Address is required";
+    }
+
+    // Pincode validation (6 digits)
+    if (!user.pincode.trim()) {
+      errors.pincode = "Pincode is required";
+    } else if (!/^[0-9]{6}$/.test(user.pincode)) {
+      errors.pincode = "Pincode must be 6 digits";
+    }
+
+    // City validation
+    if (!user.city.trim()) {
+      errors.city = "City is required";
+    }
+
+    // State validation
+    if (!user.state.trim()) {
+      errors.state = "State is required";
+    }
+
+    // Country validation
+    if (!user.country.trim()) {
+      errors.country = "Country is required";
+    }
+
+    return errors;
+  };
+
+
+  const onHandleRegister = async (e) => {
+    e.preventDefault();
+
+    if (loading) return;
+    setLoading(true);
+
+    //validation section
+    const validationErrors = validateUser(user);
+
+    if (Object.keys(validationErrors).length > 0) {
+    toast.warning("Please fill all required fields correctly");
+    for (let key in validationErrors){
+      toast.warning(validationErrors[key])
+    }
+    return;
+    } else {
+      toast.success("Form Submitted Successfully");
+    }
+
+
+    try {
+      // 1️⃣ Signup
+      const { data, error } = await supabase.auth.signUp({
+        email: user.email,
+        password: user.password,
+      });
+
+      if (error) {
+        console.error("Signup error:", error.message);
+        toast.error("something went wrong!")
+        return;
+      }
+
+      const userId = data.user.id;
+
+      const { error: profileError } = await supabase
+        .from("profile")
+        .insert([
+          {
+            id: userId,
+            name: user.name,
+            email: user.email,
+            age: user.age,
+            phone: user.phone,
+            gender: user.gender,
+            address: user.address,
+            pincode: user.pincode,
+            city: user.city,
+            state: user.state,
+            country: user.country,
+          },
+        ]);
+
+      if (profileError) {
+        toast.error("something went wrong!")
+        console.error("Profile error:", profileError.message);
+        return;
+      }
+
+      toast.success("User registered successfully ✅")
+      console.log("User registered successfully ✅");
+      navigate("/signin")
+    } catch (err) {
+      toast.error("Something went wrong!")
+      console.error("Unexpected error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className='register-body'>
@@ -200,7 +294,7 @@ const onHandleRegister = async (e) => {
             Register
           </button>
           <p className="login-link">
-            Already have an account? <a href="#">Sign in</a>
+            Already have an account? <Link to="/signin">Sign in</Link>
           </p>
         </form>
       </div>
