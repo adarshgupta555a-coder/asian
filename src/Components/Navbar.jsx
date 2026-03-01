@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import "../css/Navbar.css"
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthAction } from '../store/AuthSlice';
 import supabase from "../Database/supabase";
@@ -12,6 +12,7 @@ const Navbar = () => {
   const cartData = useSelector((state) => state?.Cart)
   const dispatch = useDispatch()
   const [mobile, setMobile] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (authData === null) {
@@ -30,6 +31,7 @@ const Navbar = () => {
 
     if (userErr) {
       toast.error("something went wrong!")
+      navigate("/signin")
       return;
     }
     

@@ -7,6 +7,7 @@ import Contact from '../Components/Home/Contact';
 import Footer from '../Components/Home/Footer';
 import Slider from '../Components/Home/Slider';
 import { useSelector } from 'react-redux';
+import Chatbot from './chatbot/Chatbot';
 
 const HomePage = () => {
   const authData = useSelector((state)=>state.Auth.value);
@@ -21,6 +22,7 @@ const HomePage = () => {
     <SliderFeature/>
     <Categories featured={true}/>
     <Contact/>
+    <Chatbot/>
     <Footer/>
     </>
 

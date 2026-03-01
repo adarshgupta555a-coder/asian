@@ -26,6 +26,10 @@ const UserDashboard = () => {
   }, [userData]);
 
   const getOrders = async () => {
+    if (!userData.id) {
+      console.log("object")
+      navigate("/signin")
+    }
     const { data: order, error: OrderErr } = await supabase
       .from("orders")
       .select("*")
