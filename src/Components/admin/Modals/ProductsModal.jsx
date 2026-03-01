@@ -21,13 +21,15 @@ const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
     const OnhandleProduct = async (e) => {
         e.preventDefault();
         console.log(product)
-         for (const [key, value] of Object.entries(product)) {
-            if (value == "") {
-                toast.warning("please fill data");
-                return;
-            }
-         }
+
         if (!editItem) {
+            for (const [key, value] of Object.entries(product)) {
+                if (value == "") {
+                    toast.warning("please fill data");
+                    return;
+                }
+            }
+            
             const { error } = await supabase
                 .from('product')
                 .insert([
@@ -78,7 +80,7 @@ const ProductsModal = ({ editItem, setShowModal, setProducts, categories }) => {
                     setProducts(res)
                     setShowModal(false)
                 }))
-            toast.success("Product successfully updated");
+                toast.success("Product successfully updated");
             } else {
                 console.log(error);
                 toast.error("Something went wrong!")

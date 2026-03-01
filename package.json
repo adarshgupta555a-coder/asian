@@ -13,6 +13,7 @@
     "@google-pay/button-react": "^3.2.1",
     "@reduxjs/toolkit": "^2.11.2",
     "@supabase/supabase-js": "^2.89.0",
+    "jspdf": "^4.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",

@@ -88,10 +88,10 @@ const CategoryModal = ({ editItem, setShowModal, setCategories }) => {
     <form onSubmit={OnhandleForm}>
       <div className="form-group">
         <label>Category Name</label>
-        <input type="text" name='name' defaultValue={category.name || editItem?.name || ''} onChange={OnchangeForm} />
-        <textarea name="description" defaultValue={category.description || editItem?.description || ''} onChange={OnchangeForm}></textarea>
-        <input type="text" name='slug' defaultValue={category.slug || editItem?.slug || ''} onChange={OnchangeForm} />
-        <input type="text" name='Image' defaultValue={category.Image || editItem?.Image || ''} onChange={OnchangeForm} />
+        <input type="text" name='name' defaultValue={category.name || editItem?.name || ''} onChange={OnchangeForm} placeholder='name' />
+        <textarea name="description" defaultValue={category.description || editItem?.description || ''} onChange={OnchangeForm} placeholder='description'></textarea>
+        <input type="text" name='slug' defaultValue={category.slug || editItem?.slug || ''} onChange={OnchangeForm} placeholder='slug' />
+        <input type="text" name='Image' defaultValue={category.Image || editItem?.Image || ''} onChange={OnchangeForm} placeholder='image url' />
 
       </div>
       <button type='submit' className="btn btn-primary">{editItem ? 'Update' : 'Add'} Category</button>

@@ -201,7 +201,7 @@ const UserDashboard = () => {
         </aside>
         <main className="main-content">
           {/* Overview Section */}
-          {menu === 0 && <OverView orders={orders} order={orderGroup} />}
+          {menu === 0 && <OverView orders={orders} order={orderGroup} cancelOrder={cancelOrder} />}
           {/* Orders Section */}
           {menu === 1 && <OrderSection orders={orders} order={orderGroup} cancelOrder={cancelOrder} />}
           {/* Cancelled Orders */}

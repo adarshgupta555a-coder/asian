@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { FetchCartThunk } from '../../store/cartThunk';
 import Payment from '../../Pages/Payment';
 import { toast } from 'react-toastify';
+import { generateInvoice } from '../../utils/generateInvoice';
 
 const CheckoutContent = ({ step, OnhandleStep }) => {
   const [cart, setCart] = useState(null);
@@ -160,6 +161,17 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
       return CartErr;
     }
 
+    const invoice = {
+    orderId: order.id,
+    customerName: userData.name,
+    email: userData.email,
+    items: item.product.name,
+    totalAmount: totalData,
+    paymentStatus: checkout.payment_mode,
+    date: Date.now()
+  }
+    generateInvoice(invoice)
+
 
     dispatch(FetchCartThunk(userData?.user_id))
     toast.success("order placed")
@@ -167,7 +179,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
       position: "top-center"
     });
     OnhandleStep();
-
+    navigate("/profile")
   }
 
   return (
@@ -308,7 +320,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
           </div>
         </div>
         {/* Payment Method */}
-        <div className="form-section">
+        {step >= 3 ?<></>:<div className="form-section">
           <h2 className="section-title">Payment Method</h2>
           <div className="payment-methods">
             <input
@@ -357,7 +369,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
               </div>
             </label>
           </div>
-        </div>
+        </div>}
       </div>}
       {/* Order Summary */}
       {cart?.length > 0 && <div className="order-summary">
@@ -406,7 +418,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
             <button className="apply-btn">Apply</button>
           </div>
         </div>
-        {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?<Payment totalData={totalData} Onpayment={Onpayment}/>: <button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
+        {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?((checkout?.payment_mode !== "Cash on Delivery")?<Payment totalData={totalData} Onpayment={Onpayment}/>:(Onpayment())): <button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
         
         <div className="security-badge">🔒 Secure SSL Encrypted Payment</div>
       </div>}
