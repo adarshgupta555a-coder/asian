@@ -33,9 +33,9 @@ export const generateInvoice = (invoiceData) => {
   y += 10;
 
   items.forEach((item) => {
-    doc.text(item.name, 20, y);
+    doc.text(item.product.name, 20, y);
     doc.text(String(item.quantity), 100, y);
-    doc.text(`₹${item.price}`, 130, y);
+    doc.text(`₹${item.product.price}`, 130, y);
     y += 10;
   });
 

@@ -84,6 +84,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
 
   const Onpayment = async () =>{
 
+    toast.info("Ordering...")
     const updates = cart.map(item =>{
       if (item.product.stock < item.quantity) {
         toast.warning("stock is not availble")
@@ -165,7 +166,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
     orderId: order.id,
     customerName: userData.name,
     email: userData.email,
-    items: item.product.name,
+    items: cart,
     totalAmount: totalData,
     paymentStatus: checkout.payment_mode,
     date: Date.now()
@@ -418,7 +419,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
             <button className="apply-btn">Apply</button>
           </div>
         </div>
-        {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?((checkout?.payment_mode !== "Cash on Delivery")?<Payment totalData={totalData} Onpayment={Onpayment}/>:(Onpayment())): <button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
+        {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?((checkout?.payment_mode !== "Cash on Delivery")?<Payment totalData={totalData} Onpayment={Onpayment}/>:<button className="place-order-btn" onClick={Onpayment}>Confirm Order</button>):<button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
         
         <div className="security-badge">🔒 Secure SSL Encrypted Payment</div>
       </div>}
