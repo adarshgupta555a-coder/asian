@@ -1,5 +1,7 @@
 import React from 'react'
-import "../css/AboutPage.css"
+import "../css/AboutPage.css";
+import Contact from '../Components/Home/Contact';
+
 const AboutPage = () => {
   return (
    <div className='about'>
@@ -221,6 +223,7 @@ const AboutPage = () => {
       </div>
     </div>
   </div>
+  <Contact/>
   {/* CTA Section */}
   <section className="cta-section">
     <h2>Ready to Join the Movement?</h2>

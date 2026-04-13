@@ -85,7 +85,7 @@
         }
 
         .acc-toggle:checked ~ .acc-content {
-          max-height: 300px;
+          max-height: 700px;
           padding-top: 16px;
           padding-bottom: 8px;
         }

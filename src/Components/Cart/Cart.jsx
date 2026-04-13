@@ -91,12 +91,12 @@ const Cart = () => {
             <span>Total</span>
             <span>₹{totalPrice}</span>
           </div>
-          <div className="promo-section">
+          {/* <div className="promo-section">
             <div className="promo-input">
               <input type="text" placeholder="Enter promo code" />
               <button className="apply-btn">Apply</button>
             </div>
-          </div>
+          </div> */}
           <Link to="/checkout" style={{textDecoration:"none"}}>
           <button className="checkout-btn">Proceed to Checkout</button>
           </Link>

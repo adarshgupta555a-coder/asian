@@ -6,6 +6,7 @@ import supabase from "../Database/supabase"
 // import { Link } from 'react-router';
 const Shop = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categories, setCategories] = useState(null);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -23,28 +24,32 @@ const Shop = () => {
     // }
   }, [selectedCategories, sortBy])
 
+  useEffect(()=>{
+        getCategoies()
+  },[])
+
   const OnhandleCategories = (e) => {
     const value = e.target.value;
     //agar value selectedCategories mein hai toh hatado aur nahi hai toh add kardo
     setSelectedCategories(prev => prev?.includes(value) ? prev?.filter(item => item !== value) : [...prev, value])
   }
 
-  const getCategoryIds = async () => {
-    if (selectedCategories.length === 0) return [];
+  // const getCategoryIds = async () => {
+  //   if (selectedCategories.length === 0) return [];
 
-    const { data, error } = await supabase
-      .from("category")
-      .select("id")
-      .in("name", selectedCategories);
+  //   const { data, error } = await supabase
+  //     .from("category")
+  //     .select("id")
+  //     .in("slug", selectedCategories);
 
-    if (error) {
-      console.log(error);
-      setError(true)
-      return [];
-    }
+  //   if (error) {
+  //     console.log(error);
+  //     setError(true)
+  //     return [];
+  //   }
 
-    return data.map(c => c.id);
-  };
+  //   return data.map(c => c.id);
+  // };
   const getProducts = async () => {
     setLoading(true)
     let query = supabase
@@ -61,8 +66,9 @@ const Shop = () => {
 
         //filter category
     if (selectedCategories.length > 0) {
-      const categoryIds = await getCategoryIds();
-      query = query.in('category_id', categoryIds);
+      // const categoryIds = await getCategoryIds();
+      console.log(selectedCategories)
+      query = query.in('category_id', selectedCategories);
     }
 
     //sort price
@@ -85,6 +91,17 @@ const Shop = () => {
 
 
   }
+
+  const getCategoies = async () => {
+    const {data, error} = await supabase
+    .from("category")
+    .select("*")
+
+    if (!error) {
+      console.log(data)
+      setCategories(data)
+    }
+   }
 
   if (loading) {
     return (<>
@@ -126,10 +143,11 @@ const Shop = () => {
               <input type="checkbox" id="cat" className="acc-toggle" />
               <label htmlFor="cat" className="acc-title">Category</label>
               <div className="acc-content">
-                <label><input type="checkbox" onChange={OnhandleCategories} value={"Men Jeans"} /> Men Jeans</label>
+                {categories?.map((item)=> (<label key={item.id}><input type="checkbox" onChange={OnhandleCategories} value={item.id} checked={selectedCategories.includes(item.id)}/>{item.name}</label>))}
+                {/* <label><input type="checkbox" onChange={OnhandleCategories} value={"Men Jeans"} /> Men Jeans</label>
                 <label><input type="checkbox" onChange={OnhandleCategories} value={"Men T-Shirts"} /> Men T-Shirts</label>
                 <label><input type="checkbox" onChange={OnhandleCategories} value={"Jeans"} /> Jeans</label>
-                <label><input type="checkbox" onChange={OnhandleCategories} value={"Men Shirts"} /> Men Shirts</label>
+                <label><input type="checkbox" onChange={OnhandleCategories} value={"Men Shirts"} /> Men Shirts</label> */}
               </div>
             </div>
 
@@ -170,7 +188,7 @@ const Shop = () => {
 
           <div className="shop-items">
             <div className="shop-heading-filter">
-              <h3>Mens Hoodies and Sweatshirts</h3>
+              <h3>Clothes & Accessories</h3>
               <div className="product-filter">
                 <div className="accordion">
                   <input type="checkbox" id="sort-top" className="acc-toggle" />

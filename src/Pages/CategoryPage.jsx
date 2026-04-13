@@ -3,11 +3,11 @@ import "../css/Shop.css"
 import ProductCard from '../Components/shop/productCard'
 import { useSelector } from 'react-redux';
 import supabase from "../Database/supabase"
-import { Link, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 const CategoryPage = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedSizes, setSelectedSizes] = useState([]);
+  // const [selectedCategories, setSelectedCategories] = useState([]);
+  // const [selectedSizes, setSelectedSizes] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const authData = useSelector((state) => state.Auth.value);
@@ -143,7 +143,7 @@ const CategoryPage = () => {
 
           <div className="shop-items">
             <div className="shop-heading-filter">
-              <h3>Mens Hoodies and Sweatshirts</h3>
+              <h3>{slug.split("-").join(" ").toUpperCase()}</h3>
               <div className="product-filter">
                 <div className="accordion">
                   <input type="checkbox" id="sort-top" className="acc-toggle" />

@@ -56,9 +56,11 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
     setCheckout((prev) => ({ ...prev, [name]: value }))
   }
 
+  const delivery_cost = checkout.delivery_option === "Faster shipping" ? 99 : 0;
+
   const totalData = cart?.reduce((acu, curr) => {
     return acu + curr.price * curr.quantity;
-  }, 0);
+  }, delivery_cost);
 
   const Onsubmit = async () => {
     console.log(checkout)
@@ -403,7 +405,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
         </div>
         <div className="summary-row">
           <span>Shipping</span>
-          <span>FREE</span>
+          <span>{checkout.delivery_option === "Faster shipping" ? "₹99" : "Free"}</span>
         </div>
         <div className="summary-row">
           <span>Tax</span>
@@ -411,14 +413,14 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
         </div>
         <div className="summary-row total">
           <span>Total</span>
-          <span>₹{totalData + 180}</span>
+          <span>₹{ totalData + 180}</span>
         </div>
-        <div className="promo-section">
+        {/* <div className="promo-section">
           <div className="promo-input">
             <input type="text" placeholder="Enter promo code" />
             <button className="apply-btn">Apply</button>
           </div>
-        </div>
+        </div> */}
         {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?((checkout?.payment_mode !== "Cash on Delivery")?<Payment totalData={totalData} Onpayment={Onpayment}/>:<button className="place-order-btn" onClick={Onpayment}>Confirm Order</button>):<button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
         
         <div className="security-badge">🔒 Secure SSL Encrypted Payment</div>

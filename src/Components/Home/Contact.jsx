@@ -1,5 +1,40 @@
+import { useState } from "react";
 import "../../css/Contact.css"
+import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
+
 const Contact = () => {
+    const [contact, setContact] = useState({
+        name:"",
+        email:"",
+        address:"no address",
+        message:""
+    });
+
+    const OnChangeForm = (e) => {
+        const {name, value} = e.target;
+        setContact((prev) => ({...prev, [name]: value}))
+    }
+
+    const OnSubmitForm = async (e) =>  {
+        e.preventDefault();
+        const serviceId = 'service_ncdfvma';
+      const templateId = 'template_bs8vmpy';
+      const publicKey = 'NXBv5vpceMZKr5hDy';
+      console.log(contact)
+        const sendToEmail = await emailjs.send(serviceId, templateId, contact, {
+    publicKey,
+  });
+        const res = await sendToEmail.text
+        console.log(res)
+        if (res) {
+            toast.success("message sended successfully");
+        } else{
+            toast.error("message is not sended");
+        }
+    }
+
+
     return (
         <section className="Contact">
             <div className="contact_us">
@@ -20,10 +55,10 @@ const Contact = () => {
                             <p>ecommerce@gmail.com</p>
                         </div>
                         <div className="contact_form">
-                            <form action="">
-                                <input type="text" placeholder="Your Name" required />
-                                <input type="email" placeholder="Your Email" required />
-                                <textarea placeholder="Your Message" required></textarea>
+                            <form onSubmit={OnSubmitForm}>
+                                <input type="text" name="name" placeholder="Your Name" defaultValue={contact.name} onChange={OnChangeForm} required />
+                                <input type="email" name="email" placeholder="Your Email" defaultValue={contact.email} onChange={OnChangeForm} required />
+                                <textarea name="message" placeholder="Your Message" onChange={OnChangeForm} required>{contact.message}</textarea>
                                 <button type="submit">Submit</button>
                             </form>
                         </div>
