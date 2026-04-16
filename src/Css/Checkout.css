@@ -367,6 +367,34 @@
             box-shadow: -3px -3px 0 var(--color-accent);
         }
 
+        .pay-order-btn {
+            width: 100%;
+            padding: 18px;
+            background: #d0defc;
+            color: #ffff;
+            border: 2px solid #2950DA;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .pay-order-btn img{
+            width: 150px;
+            height: 25px;
+        }
+
+        .pay-order-btn:hover {
+            background: #ffff;
+            color: #192839;
+            transform: translate(3px, 3px);
+            box-shadow: -3px -3px 0 var(--color-accent);
+        }
+
         .security-badge {
             margin-top: 16px;
             padding: 12px;

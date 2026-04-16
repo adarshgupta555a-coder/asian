@@ -6,6 +6,7 @@ import { FetchCartThunk } from '../../store/cartThunk';
 import Payment from '../../Pages/Payment';
 import { toast } from 'react-toastify';
 import { generateInvoice } from '../../utils/generateInvoice';
+import PaymentButton from '../../Pages/PaymentRazor';
 
 const CheckoutContent = ({ step, OnhandleStep }) => {
   const [cart, setCart] = useState(null);
@@ -421,7 +422,7 @@ const CheckoutContent = ({ step, OnhandleStep }) => {
             <button className="apply-btn">Apply</button>
           </div>
         </div> */}
-        {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?((checkout?.payment_mode !== "Cash on Delivery")?<Payment totalData={totalData} Onpayment={Onpayment}/>:<button className="place-order-btn" onClick={Onpayment}>Confirm Order</button>):<button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
+        {step === 2 ? <button className="place-order-btn" onClick={Onsubmit}>Place Order</button> : step === 3 ?((checkout?.payment_mode !== "Cash on Delivery")?<PaymentButton totalData={totalData} Onpayment={Onpayment}/>:<button className="place-order-btn" onClick={Onpayment}>Confirm Order</button>):<button className="place-order-btn" onClick={Onsubmit}>Order Placed</button>}
         
         <div className="security-badge">🔒 Secure SSL Encrypted Payment</div>
       </div>}
