@@ -225,6 +225,12 @@
             border-color: #3b82f6;
         }
 
+        .status-refunded {
+            background: #f2620f;
+            color: var(--color-white);
+            border-color: #f2620f;
+        }
+
         .status-cancelled {
             background: #ef4444;
             color: var(--color-white);

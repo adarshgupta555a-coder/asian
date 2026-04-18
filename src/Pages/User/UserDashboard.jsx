@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import supabase from "../../Database/supabase";
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import RefundedOrder from '../../Components/userDashboard/RefundedOrder';
 
 const UserDashboard = () => {
   const [menu, setMenu] = useState(0);
@@ -182,11 +183,11 @@ const UserDashboard = () => {
                 Cancelled Orders
               </a>
             </li>
-            {/* <li className="menu-item">
+            <li className="menu-item">
               <a href="#" onClick={() => setMenu(3)}>
-                Track Orders
+                Refunded Orders
               </a>
-            </li> */}
+            </li>
             <li className="menu-item">
               <a href="#" onClick={() => setMenu(4)}>
                 Wishlist
@@ -206,6 +207,8 @@ const UserDashboard = () => {
           {menu === 1 && <OrderSection orders={orders} order={orderGroup} cancelOrder={cancelOrder} />}
           {/* Cancelled Orders */}
           {menu === 2 && <CancelOrder orders={orders} order={orderGroup} />}
+          {/* Refunded Orders */}
+          {menu === 3 && <RefundedOrder orders={orders} order={orderGroup} />}
           {/* Track Order */}
           {/* {menu === 3 && <TrackOrder />} */}
           {/* Wishlist */}
