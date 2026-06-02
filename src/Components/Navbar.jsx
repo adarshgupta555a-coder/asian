@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import "../css/Navbar.css"
-import { Link, useNavigate } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthAction } from '../store/AuthSlice';
 import supabase from "../Database/supabase";
@@ -77,9 +77,9 @@ const Navbar = () => {
         />
         <ul id="navMenu" className={mobile ? "active" : ""}>
           {navItems.map((item, index) => (
-            <Link key={index} to={item.href} onClick={removeMobile}>
+            <NavLink className={({isActive})=> isActive?"active-nav":""} key={index} to={item.href} onClick={removeMobile}>
               <li>{item.name}</li>
-            </Link>))}
+            </NavLink>))}
         </ul>
         <div className="profile">
           <Link to="/search" style={{ color: "inherit", textDecoration: "none" }}>

@@ -137,6 +137,10 @@
             transform: rotate(45deg) translate(8px, 8px);
         }
 
+        .active-nav{
+            color: rgb(70, 235, 25) !important;
+        }
+        
         .mobile-menu.active span:nth-child(2) {
             opacity: 0;
         }
