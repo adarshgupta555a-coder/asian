@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "../styles/Shop.css"
-import ProductCard from '../Components/shop/productCard'
+import ProductCard from '../Components/shop/ProductCard'
 import { useSelector } from 'react-redux';
 import supabase from "../Database/supabase"
 import { useParams } from 'react-router';
