@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import "../css/navbar.css"
+import "./navbar.css"
 import { Link, NavLink, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthAction } from '../store/AuthSlice';
