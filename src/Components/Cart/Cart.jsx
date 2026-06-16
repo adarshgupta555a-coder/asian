@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "../../css/Cart.css";
+import "../../styles/Cart.css";
 import { useSelector } from 'react-redux';
 import supabase from '../../Database/supabase';
 import CartCard from './CartCard';

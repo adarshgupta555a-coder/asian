@@ -1,5 +1,5 @@
 import React from 'react'
-import "../css/AboutPage.css";
+import "../styles/AboutPage.css";
 import Contact from '../Components/Home/Contact';
 
 const AboutPage = () => {
