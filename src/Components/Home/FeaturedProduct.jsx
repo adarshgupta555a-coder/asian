@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import ProductCard from "../shop/productCard"
+import ProductCard from "../shop/ProductCard"
 import supabase from "../../Database/supabase";
 import { Link } from "react-router";
 
