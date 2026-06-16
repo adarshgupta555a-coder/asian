@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../../css/chatbot.css";
+import "../../styles/chatbot.css";
 import { toast } from 'react-toastify';
 import supabase from "../../Database/supabase"
 import { useNavigate } from 'react-router';

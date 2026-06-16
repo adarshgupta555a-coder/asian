@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import "../../Css/Category.css";
+import "../../styles/Category.css";
 import supabase from "../../Database/supabase";
 import CategoryCard from "./CategoryCard";
 import { Link } from "react-router";

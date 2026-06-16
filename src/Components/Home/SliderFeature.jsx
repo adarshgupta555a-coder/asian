@@ -1,4 +1,4 @@
-import "../../Css/SliderFeature.css"
+import "../../styles/SliderFeature.css"
 const SliderFeature = () => {
     
   return (

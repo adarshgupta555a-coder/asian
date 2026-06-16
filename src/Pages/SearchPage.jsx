@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "../css/SearchPage.css";
+import "../styles/SearchPage.css";
 import supabase from "../Database/supabase";
 import { Link } from 'react-router';
 

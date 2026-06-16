@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "../../Css/Slider.module.css";
+import style from "../../styles/Slider.module.css";
 
 const Slider = () =>{
    const [img,setimage] = useState(0);

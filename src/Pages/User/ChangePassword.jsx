@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "../../css/UserDashboard.css";
+import "../../styles/UserDashboard.css";
 import supabase from '../../Database/supabase';
 import { toast } from 'react-toastify';
 

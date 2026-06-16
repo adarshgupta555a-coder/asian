@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../css/Contact.css"
+import "../../styles/Contact.css"
 import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
 

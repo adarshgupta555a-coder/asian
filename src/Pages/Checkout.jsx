@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../css/Checkout.css"
+import "../styles/Checkout.css"
 import CheckoutContent from '../Components/Checkout/CheckoutContent';
 
 const Checkout = () => {

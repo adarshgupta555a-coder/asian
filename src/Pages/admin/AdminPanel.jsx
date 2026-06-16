@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "../../css/AdminPanel.css";
+import "../../styles/AdminPanel.css";
 import Dashboard from '../../Components/admin/Dashboard';
 import ProductSection from '../../Components/admin/ProductSection';
 import UserSection from '../../Components/admin/UserSection';

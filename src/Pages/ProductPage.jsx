@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "../css/ProductPage.css"
+import "../styles/ProductPage.css"
 import { useNavigate, useParams } from 'react-router'
 import supabase from '../Database/supabase'
 import { useDispatch, useSelector } from 'react-redux'

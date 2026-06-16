@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../../css/ForgotPassword.css"
+import "../../styles/ForgotPassword.css"
 import { Link } from 'react-router';
 import supabase from '../../Database/supabase';
 import { toast } from 'react-toastify';

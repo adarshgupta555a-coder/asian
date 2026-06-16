@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "../../css/UserDashboard.css";
+import "../../styles/UserDashboard.css";
 import OrderSection from '../../Components/userDashboard/OrderSection';
 import CancelOrder from '../../Components/userDashboard/CancelOrder';
 import TrackOrder from '../../Components/userDashboard/TrackOrder';

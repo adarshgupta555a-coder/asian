@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "../../css/Register.css"
+import "../../styles/Register.css"
 import supabase from '../../Database/supabase'
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "../../css/Login.css";
+import "../../styles/Login.css";
 import  supabase  from '../../Database/supabase';
 import { Link, useNavigate } from 'react-router';
 import { FetchCartThunk } from '../../store/cartThunk';
