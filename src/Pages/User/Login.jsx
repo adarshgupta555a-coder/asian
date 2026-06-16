@@ -81,7 +81,7 @@ const Login = () => {
     // let localstore = localStorage.setItem("user",JSON.stringify(profile))
     toast.success("login successfully.");
     FetchCartThunk(profile.id)
-    navigate("/")
+    window.location.href = "/"
     }
 
   }
