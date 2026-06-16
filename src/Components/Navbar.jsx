@@ -30,7 +30,8 @@ const Navbar = () => {
     console.log(userErr);
 
     if (userErr) {
-      toast.error("something went wrong!")
+      toast.error(userErr.message)
+      toast.info("please login first.")
       navigate("/signin")
       return;
     }
@@ -45,7 +46,8 @@ const Navbar = () => {
       return profile;
     } else {
       console.log(error)
-      toast.error("something went wrong!")
+      toast.error(error.message)
+      toast.info("please login first.")
       return ""
     }
   };

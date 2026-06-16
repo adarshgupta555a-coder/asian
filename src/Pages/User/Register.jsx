@@ -109,15 +109,17 @@ const Register = () => {
     const validationErrors = validateUser(user);
 
     if (Object.keys(validationErrors).length > 0) {
-    toast.warning("Please fill all required fields correctly");
-    for (let key in validationErrors){
-      toast.warning(validationErrors[key])
-    }
-    return;
-    } else {
-      toast.success("Form Submitted Successfully");
+      toast.warning("Please fill all required fields correctly");
+
+      Object.values(validationErrors).forEach((msg) => {
+        toast.warning(msg);
+      });
+
+      setLoading(false);
+      return;
     }
 
+    toast.success("Form Submitted Successfully");
 
     try {
       // 1️⃣ Signup
@@ -128,7 +130,12 @@ const Register = () => {
 
       if (error) {
         console.error("Signup error:", error.message);
-        toast.error("something went wrong!")
+        toast.error(error.message)
+        return;
+      }
+
+      if (!data?.user) {
+        toast.error("User creation failed");
         return;
       }
 
@@ -153,7 +160,7 @@ const Register = () => {
         ]);
 
       if (profileError) {
-        toast.error("something went wrong!")
+        toast.error(profileError.message)
         console.error("Profile error:", profileError.message);
         return;
       }

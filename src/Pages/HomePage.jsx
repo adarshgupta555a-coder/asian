@@ -22,7 +22,7 @@ const HomePage = () => {
     <SliderFeature/>
     <Categories featured={true}/>
     <Contact/>
-    <Chatbot/>
+    {/* <Chatbot/> */}
     <Footer/>
     </>
 
