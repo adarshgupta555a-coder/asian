@@ -164,8 +164,10 @@ const Register = () => {
         console.error("Profile error:", profileError.message);
         return;
       }
+      
+      toast.success("User registered successfully ✅")
 
-      toast.success("For Verification Check your gmail ✅")
+      toast.info("For Verification Check your gmail ✅")
       console.log("User registered successfully ✅");
       navigate("/signin")
     } catch (err) {
