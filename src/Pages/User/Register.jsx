@@ -119,7 +119,7 @@ const Register = () => {
       return;
     }
 
-    toast.success("Form Submitted Successfully");
+    toast.info("Please wait, submitting your data.");
 
     try {
       // 1️⃣ Signup
@@ -165,7 +165,7 @@ const Register = () => {
         return;
       }
 
-      toast.success("User registered successfully ✅")
+      toast.success("For Verification Check your gmail ✅")
       console.log("User registered successfully ✅");
       navigate("/signin")
     } catch (err) {
